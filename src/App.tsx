@@ -6,11 +6,23 @@ import {
   AccordionIcon,
   Box,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function App() {
+  const [dummyData, setDummyData] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get("http://127.0.0.1:3000/dummy");
+      setDummyData(res.data.description)
+    })();
+  }, []);
+
   return (
     <>
       <h1 className="text-green-400 text-7xl">HELLO WORLD</h1>
+
       <Accordion>
         <AccordionItem>
           <h2>
@@ -46,6 +58,8 @@ export default function App() {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
+
+      <h2 className="text-6xl text-red-500">{dummyData}</h2>
     </>
   );
 }
