@@ -20,6 +20,15 @@ export default {
           3: "#C4A63A",
           4: "#DDBB42",
           5: "#F5D049"
+        },
+        BLACK: "#0B0A0A",
+        WHITE: "#FFFFFF",
+        GRAY: {
+          2: "#F9F9F9",
+          3: "#BFBFBF",
+          4: "#9B9B9B",
+          5: "#777676",
+          6: "#1A1A1A"
         }
       },
       fontFamily: {

@@ -15,12 +15,85 @@
 }
 
 * {
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
 }
 
-@font-face {
-  font-family: 'DM-Sans';
-  src: local('DM-Sans'), url(./assets/fonts/DMSans-VariableFont_opsz,wght.ttf) format('truetype');
-  /* other formats include: 'woff2', 'truetype, 'opentype',
-                            'embedded-opentype', and 'svg' */
+.h1 {
+  font-size: 32px;
+  font-weight: 700;
+}
+.h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+.h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.h4 {
+  font-size: 16px;
+  font-weight: 700;
+}
+.h5 {
+  font-size: 14px;
+  font-weight: 700;
+}
+.h6 {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.b1 {
+  font-size: 24px;
+}
+.b2 {
+  font-size: 20px;
+}
+.b3 {
+  font-size: 16px;
+}
+.b4 {
+  font-size: 14px;
+}
+.b5 {
+  font-size: 12px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: black;
+  height: 4px;
+  border-radius: 999px;
+}
+
+input[type="range"]::-moz-range-track {
+  background: black;
+  height: 4px;
+  border-radius: 999px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -4px; /* Centers thumb on the track */
+  background-color: white;
+  height: 12px;
+  width: 12px;
+  border-radius: 999px;   
+}
+
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+  background-color: white;
+  height: 12px;
+  width: 12px;
+  /* border-radius: 999;    */
 }
