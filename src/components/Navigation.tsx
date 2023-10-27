@@ -15,7 +15,7 @@ export default function Navigation() {
     <nav>
       <ul className="mt-8 px-4 mb-4 flex flex-col gap-4">
         <li>
-          <NavLink to={"/home"}>
+          <NavLink to={"/"}>
             {({ isActive }: { isActive: boolean }) => (
               <button
                 className={clsx(
@@ -105,7 +105,12 @@ export default function Navigation() {
                   </p>
                 </div>
                 <div className="w-8 h-8 bg-YELLOW-5 rounded-md border border-BLACK flex items-center justify-center">
-                  <img src={PlusIcon} width={16} height={16} alt="add-library" />
+                  <img
+                    src={PlusIcon}
+                    width={16}
+                    height={16}
+                    alt="add-library"
+                  />
                 </div>
               </button>
             )}

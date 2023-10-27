@@ -10,7 +10,7 @@ export default function App() {
       element: <SidebarLayout />,
       children: [
         {
-          path: "/home",
+          path: "/",
           element: <h1>Hello home</h1>
         },
         {

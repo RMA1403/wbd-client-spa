@@ -5,15 +5,9 @@ import SampleImage1 from "../assets/escape.jpg";
 import SampleImage2 from "../assets/hello.jpg";
 import SampleImage3 from "../assets/play.jpg";
 
-import PlayIcon from "../assets/play-icon.svg";
-// import ResumeIcon from "../assets/pause-icon.svg"
-import ForwardIcon from "../assets/forward-icon.svg";
-import QueueIcon from "../assets/queue-icon.svg";
-
-import Audio from "../assets/audiotester.mp3"
-
 // Component imports
 import Navigation from "./Navigation";
+import Player from "./Player";
 
 export default function SidebarLayout() {
   const libraries = [
@@ -21,8 +15,6 @@ export default function SidebarLayout() {
     "Contoh Judul Library Kepanjangan Banget",
     // "Library Ketiga",
   ];
-
-  
 
   return (
     <div className="w-full h-screen flex">
@@ -71,68 +63,9 @@ export default function SidebarLayout() {
           </ul>
         </div>
 
-        {/* Player */}
-        <div className="pt-[22px] px-[22px] pb-6 w-[25vw] bg-YELLOW-5 rounded-t-3xl border-2 border-BLACK border-b-0">
-          <div className="flex items-center gap-4">
-            <img
-              className="w-[100px] h-[100px] object-cover object-center rounded-xl"
-              src={SampleImage1}
-              width={100}
-              height={100}
-              alt="episode-thumbnail"
-            />
-
-            <div className="flex flex-col gap-3">
-              <h4 className="h4 text-BLACK">
-                Ini Contoh Judul Episode Podcast Bisa Agak Panjang
-              </h4>
-              <p className="h6 text-NAVY-3">User 101</p>
-            </div>
-          </div>
-
-          <div className="w-full justify-center flex items-center gap-6 mt-6">
-            <button>
-              <img
-                className="-scale-x-100"
-                src={ForwardIcon}
-                width={24}
-                height={20}
-                alt="previous-episode"
-              />
-            </button>
-            <button className="flex items-center justify-center rounded-full bg-BLACK py-4 pl-[18px] pr-3.5">
-              <img src={PlayIcon} width={16} height={16} alt="play-episode" />
-            </button>
-            <button>
-              <img
-                src={ForwardIcon}
-                width={24}
-                height={20}
-                alt="previous-episode"
-              />
-            </button>
-          </div>
-
-          <input
-            type="range"
-            name="progress-bar"
-            className="progress-bar w-full h-[5px] rounded-xl"
-            step="0.01"
-            value="0"
-          />
-
-          {/* Hidden Audio */}
-          <audio controls className="audio-player">
-            <source src={Audio} type="audio/mpeg" />
-          </audio>
-
-          <div className="flex gap-2 items-center mt-3">
-            <img src={QueueIcon} width={16} height={16} alt="queue" />
-            <p className="text-NAVY-3 h6">Your Queue</p>
-          </div>
-        </div>
+        <Player />
       </aside>
-      <main className="w-[70vw] h-screen overflow-y-scroll bg-green-200">
+      <main className="w-[70vw] h-screen overflow-y-scroll">
         <Outlet />
       </main>
     </div>
