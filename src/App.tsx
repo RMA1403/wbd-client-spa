@@ -1,9 +1,10 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-// import DummyPage from "./pages/dummy";
+// Component imports
 import SidebarLayout from "./components/SidebarLayout";
+import HomePage from "./pages/home";
 
-export default function App() {
+export default function App(): JSX.Element {
   const router = createBrowserRouter([
     {
       path: "/",
@@ -11,7 +12,7 @@ export default function App() {
       children: [
         {
           path: "/",
-          element: <h1>Hello home</h1>
+          element: <HomePage />
         },
         {
           path: "/search",

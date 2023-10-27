@@ -9,10 +9,10 @@ import SampleImage3 from "../assets/play.jpg";
 import Navigation from "./Navigation";
 import Player from "./Player";
 
-export default function SidebarLayout() {
+export default function SidebarLayout(): JSX.Element {
   const libraries = [
     "Contoh Judul Library",
-    "Contoh Judul Library Kepanjangan Banget",
+    "Contoh Judul Library Kepanjangan Banget",  
     // "Library Ketiga",
   ];
 
