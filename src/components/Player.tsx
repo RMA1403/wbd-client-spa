@@ -39,7 +39,7 @@ export default function Player() {
   };
 
   return (
-    <div className="pt-[22px] px-[22px] pb-6 w-[25vw] bg-YELLOW-5 rounded-t-3xl border-2 border-BLACK border-b-0">
+    <div className="p-[22px] w-[25vw] bg-YELLOW-5">
       <div className="flex items-center gap-4">
         <img
           className="w-[100px] h-[100px] object-cover object-center rounded-xl"

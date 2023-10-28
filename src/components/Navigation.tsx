@@ -19,17 +19,17 @@ export default function Navigation() {
             {({ isActive }: { isActive: boolean }) => (
               <button
                 className={clsx(
-                  "flex gap-6 w-full rounded-3xl py-3.5 px-4",
-                  isActive ? "bg-YELLOW-5" : ""
+                  "flex gap-6 w-full rounded-xl py-3.5 px-4 transition-colors duration-150",
+                  isActive ? "bg-NAVY-5" : ""
                 )}
               >
                 {isActive ? (
-                  <img src={HomeIconBlack} width={24} height={21} alt="home" />
-                ) : (
                   <img src={HomeIconWhite} width={24} height={21} alt="home" />
+                ) : (
+                  <img src={HomeIconBlack} width={24} height={21} alt="home" />
                 )}
                 <p
-                  className={clsx("h4", isActive ? "text-BLACK" : "text-WHITE")}
+                  className={clsx("h4", isActive ? "text-WHITE" : "text-BLACK")}
                 >
                   Home
                 </p>
@@ -42,28 +42,28 @@ export default function Navigation() {
             {({ isActive }: { isActive: boolean }) => (
               <button
                 className={clsx(
-                  "flex gap-6 w-full rounded-3xl py-3.5 px-4",
-                  isActive ? "bg-YELLOW-5" : ""
+                  "flex gap-6 w-full rounded-xl py-3.5 px-4 transition-colors duration-150",
+                  isActive ? "bg-NAVY-5" : ""
                 )}
               >
                 {isActive ? (
-                  <img
-                    src={SearchIconBlack}
-                    width={24}
-                    height={24}
-                    alt="search"
-                  />
-                ) : (
                   <img
                     src={SearchIconWhite}
                     width={24}
                     height={24}
                     alt="search"
                   />
+                ) : (
+                  <img
+                    src={SearchIconBlack}
+                    width={24}
+                    height={24}
+                    alt="search"
+                  />
                 )}
                 <p
-                  className={clsx("h4", isActive ? "text-BLACK" : "text-WHITE")}
-                >
+                  className={clsx("h4", isActive ? "text-WHITE" : "text-BLACK")}
+                  >
                   Search
                 </p>
               </button>
@@ -75,21 +75,21 @@ export default function Navigation() {
             {({ isActive }: { isActive: boolean }) => (
               <button
                 className={clsx(
-                  "flex w-full items-center rounded-3xl py-2.5 px-4 justify-between",
-                  isActive ? "bg-YELLOW-5" : ""
+                  "flex w-full items-center rounded-xl py-2.5 px-4 justify-between 4 transition-colors duration-150",
+                  isActive ? "bg-NAVY-5" : ""
                 )}
               >
                 <div className="flex gap-6">
                   {isActive ? (
                     <img
-                      src={LibraryIconBlack}
+                      src={LibraryIconWhite}
                       width={24}
                       height={21}
                       alt="library"
                     />
                   ) : (
                     <img
-                      src={LibraryIconWhite}
+                      src={LibraryIconBlack}
                       width={24}
                       height={21}
                       alt="library"
@@ -98,13 +98,14 @@ export default function Navigation() {
                   <p
                     className={clsx(
                       "h4",
-                      isActive ? "text-BLACK" : "text-WHITE"
+                      isActive ? "text-WHITE" : "text-BLACK"
                     )}
                   >
                     Your Library
                   </p>
                 </div>
-                <div className="w-8 h-8 bg-YELLOW-5 rounded-md border border-BLACK flex items-center justify-center">
+                
+                <div className={clsx("w-8 h-8 bg-NAVY-5 rounded-md items-center justify-center", isActive ? "invisible" : "flex")}>
                   <img
                     src={PlusIcon}
                     width={16}
