@@ -1,10 +1,10 @@
 // Asset imports
-import SampleImage1 from "../assets/escape.jpg";
+import SampleImage1 from "../../assets/escape.jpg";
 
-import PlayIcon from "../assets/play-icon.svg";
-import PauseIcon from "../assets/pause-icon.svg";
-import ForwardIcon from "../assets/forward-icon.svg";
-import QueueIcon from "../assets/queue-icon.svg";
+import PlayIcon from "../../assets/play-icon.svg";
+import PauseIcon from "../../assets/pause-icon.svg";
+import ForwardIcon from "../../assets/forward-icon.svg";
+import QueueIcon from "../../assets/queue-icon.svg";
 import { useRef, useState } from "react";
 
 export default function Player() {
@@ -70,14 +70,14 @@ export default function Player() {
         {isPlaying ? (
           <button
             onClick={handlePause}
-            className="flex items-center justify-center rounded-full bg-BLACK p-4"
+            className="flex items-center justify-center rounded-full hover:bg-opacity-80 bg-BLACK p-4"
           >
             <img src={PauseIcon} width={16} height={16} alt="play-episode" />
           </button>
         ) : (
           <button
             onClick={handlePlay}
-            className="flex items-center justify-center rounded-full bg-BLACK py-4 pl-[18px] pr-3.5"
+            className="flex items-center justify-center rounded-full hover:bg-opacity-80 bg-BLACK py-4 pl-[18px] pr-3.5"
           >
             <img src={PlayIcon} width={16} height={16} alt="pause-episode" />
           </button>

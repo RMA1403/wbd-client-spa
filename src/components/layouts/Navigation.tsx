@@ -2,13 +2,13 @@ import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 
 // Asset imports
-import HomeIconBlack from "../assets/home-icon-black.svg";
-import HomeIconWhite from "../assets/home-icon-white.svg";
-import SearchIconBlack from "../assets/search-icon-black.svg";
-import SearchIconWhite from "../assets/search-icon-white.svg";
-import LibraryIconBlack from "../assets/library-icon-black.svg";
-import LibraryIconWhite from "../assets/library-icon-white.svg";
-import PlusIcon from "../assets/plus-icon.svg";
+import HomeIconBlack from "../../assets/home-icon-black.svg";
+import HomeIconWhite from "../../assets/home-icon-white.svg";
+import SearchIconBlack from "../../assets/search-icon-black.svg";
+import SearchIconWhite from "../../assets/search-icon-white.svg";
+import LibraryIconBlack from "../../assets/library-icon-black.svg";
+import LibraryIconWhite from "../../assets/library-icon-white.svg";
+import PlusIcon from "../../assets/plus-icon.svg";
 
 export default function Navigation() {
   return (
@@ -20,7 +20,7 @@ export default function Navigation() {
               <button
                 className={clsx(
                   "flex gap-6 w-full rounded-xl py-3.5 px-4 transition-colors duration-150",
-                  isActive ? "bg-NAVY-5" : ""
+                  isActive ? "bg-NAVY-5" : "hover:bg-NAVY-5/25"
                 )}
               >
                 {isActive ? (
@@ -43,7 +43,7 @@ export default function Navigation() {
               <button
                 className={clsx(
                   "flex gap-6 w-full rounded-xl py-3.5 px-4 transition-colors duration-150",
-                  isActive ? "bg-NAVY-5" : ""
+                  isActive ? "bg-NAVY-5" : "hover:bg-NAVY-5/25"
                 )}
               >
                 {isActive ? (
@@ -76,7 +76,7 @@ export default function Navigation() {
               <button
                 className={clsx(
                   "flex w-full items-center rounded-xl py-2.5 px-4 justify-between 4 transition-colors duration-150",
-                  isActive ? "bg-NAVY-5" : ""
+                  isActive ? "bg-NAVY-5" : "hover:bg-NAVY-5/25"
                 )}
               >
                 <div className="flex gap-6">

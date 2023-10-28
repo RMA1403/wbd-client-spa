@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 
 // Asset imports
-import SampleImage1 from "../assets/escape.jpg";
-import SampleImage2 from "../assets/hello.jpg";
-import SampleImage3 from "../assets/play.jpg";
-import SearchIconBlack from "../assets/search-icon-black.svg";
+import SampleImage1 from "../../assets/escape.jpg";
+import SampleImage2 from "../../assets/hello.jpg";
+import SampleImage3 from "../../assets/play.jpg";
+import SearchIconBlack from "../../assets/search-icon-black.svg";
 
 // Component imports
 import Navigation from "./Navigation";
@@ -31,9 +31,9 @@ export default function SidebarLayout(): JSX.Element {
               <input id="library-search" className="text-[10px] outline-none p-0 bg-transparent flex-auto border-0 leading-[10px] focus:ring-0" type="text" />
             </div>
 
-            <ul className="mt-4 w-full flex flex-col gap-4 h-[112px] overflow-y-scroll">
+            <ul className="mt-4 px-2.5 w-full flex flex-col gap-4 h-[112px] overflow-y-scroll">
               {libraries.map((library, idx) => (
-                <li key={idx} className="px-2.5 rounded-lg flex gap-4 items-center hover:bg-GRAY-3/25">
+                <li key={idx} className="rounded-md flex gap-4 items-center hover:bg-NAVY-5/25">
                   <div className="shrink-0 w-12 h-12 overflow-hidden rounded-md grid grid-cols-2 grid-rows-2">
                     <img
                       className="object-cover object-center w-6 h-6"
@@ -75,7 +75,7 @@ export default function SidebarLayout(): JSX.Element {
 
         <Player />
       </aside>
-      <main className="w-[70vw] h-screen overflow-y-scroll">
+      <main className="w-[75vw] h-screen overflow-y-scroll">
         <Outlet />
       </main>
     </div>

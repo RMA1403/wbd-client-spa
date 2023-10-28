@@ -1,6 +1,6 @@
 // Component imports
 import { useEffect, useState } from "react";
-import PodcastCard, { cardProps } from "./components/PodcastCard";
+import PodcastCard, { cardProps } from "../../components/PodcastCard";
 import axios from "axios";
 
 export default function HomePage(): JSX.Element {
@@ -28,10 +28,10 @@ export default function HomePage(): JSX.Element {
   }, []);
 
   return (
-    <section className="px-8">
+    <section className="px-8 pb-20">
       <h2 className="h1">Technology</h2>
 
-      <div className="mt-4 -ml-1.5 px-1.5 py-2 flex gap-8 overflow-x-auto">
+      <div className="mt-4 -ml-1.5 px-1.5 py-2 flex justify-between overflow-x-auto">
         {techPodcasts?.map((podcast: cardProps, idx: number) => (
           <PodcastCard key={idx} {...podcast} />
         ))}
@@ -39,7 +39,7 @@ export default function HomePage(): JSX.Element {
 
       <h2 className="h1 mt-6">Comedy</h2>
 
-      <div className="mt-4 -ml-1.5 px-1.5 py-2 flex gap-8 overflow-x-auto">
+      <div className="mt-4 -ml-1.5 px-1.5 py-2 flex justify-between overflow-x-auto">
         {comedyPodcasts?.map((podcast: cardProps, idx: number) => (
           <PodcastCard key={idx} {...podcast} />
         ))}
@@ -47,7 +47,7 @@ export default function HomePage(): JSX.Element {
 
       <h2 className="h1 mt-6">Horror</h2>
 
-      <div className="mt-4 -ml-1.5 px-1.5 py-2 flex gap-8 overflow-x-auto">
+      <div className="mt-4 -ml-1.5 px-1.5 py-2 flex justify-between overflow-x-auto">
         {horrorPodcasts?.map((podcast: cardProps, idx: number) => (
           <PodcastCard key={idx} {...podcast} />
         ))}
