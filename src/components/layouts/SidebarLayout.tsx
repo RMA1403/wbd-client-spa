@@ -18,53 +18,53 @@ export default function SidebarLayout(): JSX.Element {
   ];
 
   return (
-    <div className="w-full h-screen flex">
-      <aside className="w-[25vw] h-screen bg-WHITE flex flex-col justify-between items-center shadow-[2px_0_20px_0_rgba(0,0,0,0.25)]">
+    <div className="w-full h-screen hidden md:flex">
+      <aside className="w-[30vw] h-screen bg-WHITE flex flex-col justify-between items-center shadow-[2px_0_20px_0_rgba(0,0,0,0.25)] lg:w-[25vw]">
         <div className="w-full">
           <Navigation />
 
-          <section className="py-3 px-4 border-t border-t-GRAY-3">
+          <section className="py-3 px-3 border-t border-t-GRAY-3 xl:px-4">
             <div className="w-full py-2 px-4 rounded-lg bg-NAVY-5/50 flex gap-2 items-center">
               <label htmlFor="library-search">
                 <img src={SearchIconBlack} width={10} height={10} alt="" />
               </label>
-              <input id="library-search" className="text-[10px] outline-none p-0 bg-transparent flex-auto border-0 leading-[10px] focus:ring-0" type="text" />
+              <input id="library-search" className="text-[8px] outline-none p-0 bg-transparent flex-auto border-0 leading-[8px] focus:ring-0 xl:leading-[10px] xl:text-[10px]" type="text" />
             </div>
 
-            <ul className="mt-4 px-2.5 w-full flex flex-col gap-4 h-[112px] overflow-y-scroll">
+            <ul className="mt-3 px-2.5 w-full flex flex-col gap-3 h-[76px] overflow-y-scroll xl:h-[112px] xl:gap-4 xl:mt-4">
               {libraries.map((library, idx) => (
-                <li key={idx} className="rounded-md flex gap-4 items-center hover:bg-NAVY-5/25">
-                  <div className="shrink-0 w-12 h-12 overflow-hidden rounded-md grid grid-cols-2 grid-rows-2">
+                <li key={idx} className="rounded-md flex gap-2 items-center hover:bg-NAVY-5/25 xl:gap-4">
+                  <div className="shrink-0 w-8 h-8 overflow-hidden rounded-md grid grid-cols-2 grid-rows-2 xl:w-12 xl:h-12">
                     <img
-                      className="object-cover object-center w-6 h-6"
+                      className="object-cover object-center w-5 h-4 xl:w-6 xl:h-6"
                       src={SampleImage1}
                       width={24}
                       height={24}
                       alt=""
                     />
                     <img
-                      className="object-cover object-center w-6 h-6"
+                      className="object-cover object-center w-5 h-4 xl:w-6 xl:h-6"
                       src={SampleImage2}
                       width={24}
                       height={24}
                       alt=""
                     />
                     <img
-                      className="object-cover object-center w-6 h-6"
+                      className="object-cover object-center w-5 h-4 xl:w-6 xl:h-6"
                       src={SampleImage3}
                       width={24}
                       height={24}
                       alt=""
                     />
                     <img
-                      className="object-cover object-center w-6 h-6"
+                      className="object-cover object-center w-5 h-4 xl:w-6 xl:h-6"
                       src={SampleImage1}
                       width={24}
                       height={24}
                       alt=""
                     />
                   </div>
-                  <p className="h5 text-BLACK text-ellipsis whitespace-nowrap overflow-hidden">
+                  <p className="h5 text-BLACK text-ellipsis whitespace-nowrap overflow-hidden md:max-xl:text-[10px]">
                     {library}
                   </p>
                 </li>
@@ -75,7 +75,8 @@ export default function SidebarLayout(): JSX.Element {
 
         <Player />
       </aside>
-      <main className="w-[75vw] h-screen overflow-y-scroll">
+
+      <main className="w-[70vw] h-screen overflow-y-scroll lg:w-[75vw]">
         <Outlet />
       </main>
     </div>
