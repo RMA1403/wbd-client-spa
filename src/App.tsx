@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SidebarLayout from "./components/layouts/SidebarLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
 import HomePage from "./pages/home";
+import QueuePage from "./pages/queue";
 
 export default function App(): JSX.Element {
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ export default function App(): JSX.Element {
             {
               path: "/library",
               element: <h1>Hello library</h1>,
+            },
+            {
+              path: "/queue",
+              element: <QueuePage />,
             },
           ],
         },

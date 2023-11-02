@@ -1,3 +1,6 @@
+import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
 // Asset imports
 import SampleImage1 from "../../assets/escape.jpg";
 
@@ -5,7 +8,6 @@ import PlayIcon from "../../assets/play-icon.svg";
 import PauseIcon from "../../assets/pause-icon.svg";
 import ForwardIcon from "../../assets/forward-icon.svg";
 import QueueIcon from "../../assets/queue-icon.svg";
-import { useRef, useState } from "react";
 
 export default function Player() {
   const playerRef = useRef<HTMLAudioElement | null>(null);
@@ -72,14 +74,26 @@ export default function Player() {
             onClick={handlePause}
             className="flex items-center justify-center rounded-full hover:bg-opacity-80 bg-BLACK p-4"
           >
-            <img className="w-3 h-3 xl:w-4 xl:h-4" src={PauseIcon} width={16} height={16} alt="play-episode" />
+            <img
+              className="w-3 h-3 xl:w-4 xl:h-4"
+              src={PauseIcon}
+              width={16}
+              height={16}
+              alt="play-episode"
+            />
           </button>
         ) : (
           <button
             onClick={handlePlay}
             className="flex items-center justify-center rounded-full hover:bg-opacity-80 bg-BLACK py-3 pr-2.5 pl-3.5 xl:py-4 xl:pl-[18px] xl:pr-3.5"
           >
-            <img className="w-3 h-3 xl:w-4 xl:h-4" src={PlayIcon} width={16} height={16} alt="pause-episode" />
+            <img
+              className="w-3 h-3 xl:w-4 xl:h-4"
+              src={PlayIcon}
+              width={16}
+              height={16}
+              alt="pause-episode"
+            />
           </button>
         )}
         <button>
@@ -118,10 +132,19 @@ export default function Player() {
         <source src="http://localhost:3000/audio" type="audio/mpeg" />
       </audio>
 
-      <div className="flex gap-1 items-center mt-3 xl:gap-2">
-        <img className="w-3 h-3 xl:w-4 xl:h-4" src={QueueIcon} width={16} height={16} alt="queue" />
-        <p className="text-NAVY-3 h6 md:max-xl:text-[10px]">Your Queue</p>
-      </div>
+      <Link to="/queue">
+        <div className="flex gap-1 items-center mt-3 xl:gap-2">
+          <img
+            className="w-3 h-3 xl:w-4 xl:h-4"
+            src={QueueIcon}
+            width={16}
+            height={16}
+            alt="queue"
+          />
+
+          <p className="text-NAVY-3 h6 md:max-xl:text-[10px]">Your Queue</p>
+        </div>
+      </Link>
     </div>
   );
 }
