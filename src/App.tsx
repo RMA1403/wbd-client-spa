@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SidebarLayout from "./components/layouts/SidebarLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
 import HomePage from "./pages/home";
+import PodcastPage from "./pages/podcast";
 
 export default function App(): JSX.Element {
   const router = createBrowserRouter([
@@ -25,7 +26,11 @@ export default function App(): JSX.Element {
             },
             {
               path: "/library",
-              element: <h1>Hello library</h1>,
+              element: <h1>Hello Library</h1>,
+            },
+            {
+              path: "/podcast",
+              element: <PodcastPage/>,
             },
           ],
         },
