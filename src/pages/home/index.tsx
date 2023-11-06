@@ -12,6 +12,14 @@ export default function HomePage(): JSX.Element {
 
   useEffect(() => {
     if (window) {
+      if (window.innerWidth >= 1500) {
+        setCardCount(5);
+      } else if (window.innerWidth >= 1024) {
+        setCardCount(4);
+      } else {
+        setCardCount(3);
+      }
+
       window.addEventListener("resize", () => {
         if (window.innerWidth >= 1500) {
           setCardCount(5);
@@ -23,25 +31,24 @@ export default function HomePage(): JSX.Element {
       });
     }
 
-    
     (async () => {
       const axiosInstance = axios.create({
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       const [resTech, resComedy, resHorror] = await Promise.all([
         axiosInstance.get(
-          "http://localhost:3000/podcast/random/technology"
+          `${import.meta.env.VITE_REST_URL}/podcast/random/technology`
         ),
         axiosInstance.get(
-          "http://localhost:3000/podcast/random/comedy"
+          `${import.meta.env.VITE_REST_URL}/podcast/random/comedy`
         ),
         axiosInstance.get(
-          "http://localhost:3000/podcast/random/horror"
-        )
-      ])
+          `${import.meta.env.VITE_REST_URL}/podcast/random/horror`
+        ),
+      ]);
 
       setTechPodcasts(resTech.data.podcasts);
       setComedyPodcasts(resComedy.data.podcasts);

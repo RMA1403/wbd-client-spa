@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useRevalidator } from "react-router-dom";
 
 // Asset imports
 import SampleImage1 from "../../assets/escape.jpg";
@@ -8,18 +8,62 @@ import PlayIcon from "../../assets/play-icon.svg";
 import PauseIcon from "../../assets/pause-icon.svg";
 import ForwardIcon from "../../assets/forward-icon.svg";
 import QueueIcon from "../../assets/queue-icon.svg";
+import axios from "axios";
+
+type episode = {
+  id_episode: number;
+  title: string;
+  description: string;
+  url_thumbnail: string;
+  url_audio: string;
+  id_podcast: number;
+};
 
 export default function Player() {
   const playerRef = useRef<HTMLAudioElement | null>(null);
+  const revalidator = useRevalidator();
 
   // Component states
   const [isPlaying, setPlaying] = useState(false);
   const [currProgress, setCurrProgress] = useState(0);
+  const [currentQueue, setCurrentQueue] = useState<episode>();
+  const [nextQueue, setNextQueue] = useState<episode>();
+  const [prevQueue, setPrevQueue] = useState<episode>();
+
+  useEffect(() => {
+    (async function () {
+      const axiosInstance = axios.create({
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const [current, next, prev] = await Promise.all([
+        axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/current`),
+        axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/next`),
+        axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/previous`),
+      ]);
+
+      setCurrentQueue(current.data.result);
+      setNextQueue(next.data.result);
+      setPrevQueue(prev.data.result);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (playerRef.current) {
+      playerRef.current.src = currentQueue?.url_audio
+        ? `${import.meta.env.VITE_REST_URL}/audio/${currentQueue?.url_audio}`
+        : "";
+    }
+  }, [currentQueue]);
 
   const handlePlay = () => {
     setPlaying(true);
 
     if (playerRef.current) {
+      console.log(playerRef.current.src);
+
       playerRef.current.play();
     }
   };
@@ -33,10 +77,84 @@ export default function Player() {
   };
 
   const handleUpdateProgress = () => {
-    if (playerRef.current) {
+    if (playerRef.current?.currentTime && playerRef.current.duration) {
       const progress =
         (playerRef.current.currentTime / playerRef.current.duration) * 100;
       setCurrProgress(progress);
+    }
+  };
+
+  const handleMoveForward = async () => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_REST_URL}/queue/forward`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (res.data.message === "success") {
+      setPrevQueue(() => {
+        const currQueueTemp = currentQueue;
+        setCurrentQueue(() => {
+          const nextQueueTemp = nextQueue;
+
+          axios
+            .get(`${import.meta.env.VITE_REST_URL}/queue/next`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            })
+            .then((res) =>
+              setNextQueue(() => {
+                revalidator.revalidate();
+                return res.data.result;
+              })
+            );
+
+          return nextQueueTemp;
+        });
+        return currQueueTemp;
+      });
+    }
+  };
+
+  const handleMoveBackward = async () => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_REST_URL}/queue/backward`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (res.status === 200) {
+      setNextQueue(() => {
+        const currQueueTemp = currentQueue;
+        setCurrentQueue(() => {
+          const prevQueueTemp = prevQueue;
+
+          axios
+            .get(`${import.meta.env.VITE_REST_URL}/queue/previous`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            })
+            .then((res) =>
+              setPrevQueue(() => {
+                revalidator.revalidate();
+                return res.data.result;
+              })
+            );
+
+          return prevQueueTemp;
+        });
+        return currQueueTemp;
+      });
     }
   };
 
@@ -60,13 +178,13 @@ export default function Player() {
       </div>
 
       <div className="w-full justify-center flex items-center gap-4 mt-4 xl:gap-6 xl:mt-6">
-        <button>
+        <button onClick={handleMoveBackward}>
           <img
             className="-scale-x-100 w-5 h-4 xl:w-6 xl:h-5"
             src={ForwardIcon}
             width={24}
             height={20}
-            alt="previous-episode"
+            alt="previous-queue"
           />
         </button>
         {isPlaying ? (
@@ -96,13 +214,13 @@ export default function Player() {
             />
           </button>
         )}
-        <button>
+        <button onClick={handleMoveForward}>
           <img
             className="w-5 h-4 xl:w-6 xl:h-5"
             src={ForwardIcon}
             width={24}
             height={20}
-            alt="previous-episode"
+            alt="next-queue"
           />
         </button>
       </div>
@@ -129,7 +247,7 @@ export default function Player() {
         onTimeUpdate={handleUpdateProgress}
         className="audio-player hidden"
       >
-        <source src="http://localhost:3000/audio" type="audio/mpeg" />
+        <source src="" type="audio/mpeg" />
       </audio>
 
       <Link to="/queue">

@@ -19,7 +19,7 @@ export default function useSession() {
       }
 
       const res = await axios.post(
-        "http://localhost:3000/token/verify",
+        `${import.meta.env.VITE_REST_URL}/token/verify`,
         {},
         {
           headers: {

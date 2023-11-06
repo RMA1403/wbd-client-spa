@@ -5,8 +5,19 @@ import SidebarLayout from "./components/layouts/SidebarLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
 import HomePage from "./pages/home";
 import QueuePage from "./pages/queue";
+import axios from "axios";
 
 export default function App(): JSX.Element {
+  const userQueueLoader = async () => {
+    const res = await axios.get(`${import.meta.env.VITE_REST_URL}/queue`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    return res.data.queue;
+  };
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -31,6 +42,7 @@ export default function App(): JSX.Element {
             {
               path: "/queue",
               element: <QueuePage />,
+              loader: userQueueLoader,
             },
           ],
         },
