@@ -4,14 +4,12 @@ import PlusIcon from "../assets/plus-icon.svg";
 
 
 export type headerProps = {
-    genre: string,
-    creator: string,
     title: string,
     description: string,
     imageurl: string
   }
 
-  export default function PodcastHeader({genre, creator, title, description, imageurl}: headerProps): JSX.Element {
+  export default function EpisodeHeader({title, description, imageurl}: headerProps): JSX.Element {
     return (
         <div className="block ml-[60px]">
         <div className="w-[950px] inline-flex mt-[20px]">
@@ -29,15 +27,8 @@ export type headerProps = {
 
             <div className="ml-[30px]">
                 <div className="block">
-                    <div className="inline-flex w-[100px] h-[32px] rounded-[32px] bg-NAVY-5 text-white align-middle items-center justify-center">
-                        <h3 className="h6">{genre}</h3>
-                    </div>
 
-                    <div className="inline-flex ml-[10px]">
-                        <h3 className="h6 text-NAVY-5">Created By {creator}</h3>
-                    </div>
                 </div>
-
                 <div className="block">
                     <h1 className="h1 my-[10px] leading-tight">{title}</h1>
                 </div>
@@ -48,31 +39,31 @@ export type headerProps = {
             </div>
 
         </div>
-
+        
         <div className="block mt-[20px]">
-
             <button 
             data-te-toggle="tooltip"
-            title="add episode to queue"
+            title="add episode to library"
             className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4">
-            Add To Library
+            Play Episode
             <img 
             className="inline ml-[45px]"
             width={16}
             height={16}
-            src={PlusIcon} 
+            src={PlayIcon} 
             alt="" />
             </button>
 
             <button 
             data-te-toggle="tooltip"
-            title="add episode to library"
-            className=" w-[48px] h-[48px] bg-black text-white rounded-[32px] h4 leading-4 ml-[30px]">
+            title="add episode to queue"
+            className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4 ml-[30px]">
+            Add To Queue
             <img 
-            className="inline ml-[5px]"
-            width={18}
-            height={18}
-            src={PlayIcon} 
+            className="inline ml-[45px]"
+            width={16}
+            height={16}
+            src={PlusIcon} 
             alt="" />
             </button>
 

@@ -5,6 +5,7 @@ import SidebarLayout from "./components/layouts/SidebarLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
 import HomePage from "./pages/home";
 import PodcastPage from "./pages/podcast";
+import EpisodePage from "./pages/episode"
 
 export default function App(): JSX.Element {
   const router = createBrowserRouter([
@@ -32,6 +33,10 @@ export default function App(): JSX.Element {
               path: "/podcast",
               element: <PodcastPage/>,
             },
+            {
+              path: "/episode",
+              element: <EpisodePage/>,
+            }
           ],
         },
       ],

@@ -19,7 +19,7 @@ export default function PodcastCard({title, description, imageurl}: cardProps): 
         alt="podcast-thumbnail"
       />
 
-      <div className="pt-3 pb-5 px-1.5 w-full group-hover:text-NAVY-2 relative xl:pt-4 xl:pb-6 xl:px-2.5">
+      <div className="pt-3 pb-5 px-1.5 w-full group-hover:text-NAVY-2 relative xl:-4 xl:pb-6 xl:px-2.5">
         <button className="invisible group-hover:visible flex absolute right-2.5 top-0 -translate-y-[10px] group-hover:-translate-y-[32px] items-center justify-center rounded-full bg-BLACK py-4 pl-[18px] pr-3.5 transition-transform duration-500">
           <img src={PlayIcon} width={16} height={16} alt="pause-episode" />
         </button>
