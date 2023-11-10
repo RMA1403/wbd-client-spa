@@ -1,13 +1,7 @@
 import {  } from "@chakra-ui/react";
-import SearchIconBlack from "../../assets/search-icon-black.svg";
+import SearchIconBlack from "~/src/assets/search-icon-black.svg";
 // import ChevronDownIcon from "../../assets/chevron-down.svg";
 // import ChevronUpIcon from "../../assets/chevron-up.svg";
-import {
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Select,
-} from '@chakra-ui/react'
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -41,28 +35,11 @@ const SearchPage = () => {
           {/* search */}
           <div className="flex border border-black p-2 rounded-full gap-4 w-6/12">
             <img src={SearchIconBlack} width={20} height={20} alt="" />
-            <Editable placeholder="What do you want to listen to?">
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
+            {/* <input type="text" className="border-0"/> */}
           </div>
 
           {/* filter */}
           <div className="flex">
-            <Select defaultValue="all" className="w-4/12">
-              <option value='all'>All Genre</option>
-              <option value='tech'>Technology</option>
-              <option value='comedy'>Comedy</option>
-              <option value='sports'>Sports</option>
-            </Select>
-            
-            <Select defaultValue="all" className="w-4/12">
-              <option value='all'>All Episode</option>
-              <option value='option1'>Option 1</option>
-              <option value='option2'>Option 2</option>
-              <option value='option3'>Option 3</option>
-            </Select>
-            
           </div>
         </div>
         <div>
