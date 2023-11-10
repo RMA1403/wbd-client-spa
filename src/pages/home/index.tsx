@@ -13,7 +13,9 @@ export default function HomePage(): JSX.Element {
   useEffect(() => {
     if(window) {
       window.addEventListener("resize", () => {
-        if (window.innerWidth >= 1500) {
+        if (window.innerWidth >= 1700) {
+          setCardCount(7) 
+        } else if (window.innerWidth >= 1500) {
           setCardCount(5)
         } else if (window.innerWidth >= 1024) {
           setCardCount(4)
