@@ -9,13 +9,19 @@ import axios from "axios";
 
 export default function App(): JSX.Element {
   const userQueueLoader = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_REST_URL}/queue`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_REST_URL}/queue`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
-    return res.data.queue;
+      return res.data.queue;
+    } catch (err) {
+      console.log(err);
+      localStorage.removeItem("token");
+      window.location.replace("http://localhost:8080/public/login");
+    }
   };
 
   const router = createBrowserRouter([
