@@ -19,10 +19,12 @@
     "framer-motion": "^10.16.4",
     "jsx": "^0.9.89",
     "lucide-react": "^0.292.0",
+    "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-jsx": "^1.0.0",
     "react-router-dom": "^6.17.0",
+    "react-select": "^5.8.0",
     "react-text-input": "^0.0.8",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7"
