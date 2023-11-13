@@ -5,7 +5,7 @@ export type queueItem = {
     title: string;
     description: string;
     url_thumbnail: string;
-    Podcast: {
+    PremiumPodcast: {
       title: string;
     };
   };
@@ -25,7 +25,7 @@ export default function QueuePage() {
             key={idx}
           >
             <div className="flex items-center">
-              <p className="w-4 h3 group-first:text-WHITE">
+              <p className="w-7 h3 group-first:text-WHITE">
                 {idx === 0 ? "#" : idx}
               </p>
               <img
@@ -47,7 +47,7 @@ export default function QueuePage() {
             </div>
 
             <p className="h4 text-NAVY-3 group-first:text-WHITE w-[14.68vw] text-ellipsis whitespace-nowrap overflow-hidden">
-              {item.Episode.Podcast.title}
+              {item.Episode.PremiumPodcast.title}
             </p>
           </li>
         ))}
