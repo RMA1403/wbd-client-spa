@@ -11,7 +11,7 @@ export type headerProps = {
 
   export default function EpisodeHeader({title, description, imageurl}: headerProps): JSX.Element {
     return (
-        <div className="block ml-[60px]">
+        <div className="block">
         <div className="w-[950px] inline-flex mt-[20px]">
 
             <div className="">
@@ -43,7 +43,7 @@ export type headerProps = {
         <div className="block mt-[20px]">
             <button 
             data-te-toggle="tooltip"
-            title="add episode to library"
+            title="play episode"
             className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4">
             Play Episode
             <img 

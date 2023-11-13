@@ -4,16 +4,16 @@ import PlusIcon from "../assets/plus-icon.svg";
 
 
 export type headerProps = {
-    genre: string,
+    category: string,
     creator: string,
     title: string,
     description: string,
     imageurl: string
   }
 
-  export default function PodcastHeader({genre, creator, title, description, imageurl}: headerProps): JSX.Element {
+  export default function PodcastHeader({category, creator, title, description, imageurl}: headerProps): JSX.Element {
     return (
-        <div className="block ml-[60px]">
+        <div className="block">
         <div className="w-[950px] inline-flex mt-[20px]">
 
             <div className="">
@@ -30,7 +30,7 @@ export type headerProps = {
             <div className="ml-[30px]">
                 <div className="block">
                     <div className="inline-flex w-[100px] h-[32px] rounded-[32px] bg-NAVY-5 text-white align-middle items-center justify-center">
-                        <h3 className="h6">{genre}</h3>
+                        <h3 className="h6 capitalize">{category.toLowerCase()}</h3>
                     </div>
 
                     <div className="inline-flex ml-[10px]">
@@ -53,7 +53,7 @@ export type headerProps = {
 
             <button 
             data-te-toggle="tooltip"
-            title="add episode to queue"
+            title="add episode to library"
             className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4">
             Add To Library
             <img 
@@ -66,8 +66,8 @@ export type headerProps = {
 
             <button 
             data-te-toggle="tooltip"
-            title="add episode to library"
-            className=" w-[48px] h-[48px] bg-black text-white rounded-[32px] h4 leading-4 ml-[30px]">
+            title="play episode"
+            className=" w-[48px] h-[48px] bg-black text-white rounded-[32px] h4 leading-4 ml-[30px] hover:bg-gray-600">
             <img 
             className="inline ml-[5px]"
             width={18}

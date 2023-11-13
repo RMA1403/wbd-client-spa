@@ -30,11 +30,11 @@ export default function App(): JSX.Element {
               element: <h1>Hello Library</h1>,
             },
             {
-              path: "/podcast",
+              path: "/podcast/:podcastId",
               element: <PodcastPage/>,
             },
             {
-              path: "/episode",
+              path: "/episode/:episodeId",
               element: <EpisodePage/>,
             }
           ],
