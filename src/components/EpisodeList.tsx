@@ -11,16 +11,17 @@ export type episodeProps = {
   }
 
   export default function EpisodeList({order, title, description, imageurl}: episodeProps): JSX.Element {
+    const urlPrefix = "http://localhost:3000/images/"
     return (
         <div className="group/item flex items-center w-[1100px] h-[110px] rounded-xl bg-white hover:bg-NAVY-5 text-black hover:text-white">
 
             <h1 className="h2 ml-[30px] mr-[20px]">{order}</h1>
 
             <img 
-            className="rounded-lg w-[75px] h-[75px]"
+            className="rounded-lg w-[75px] h-[75px] object-cover object-center"
             width={75}
             height={75}
-            src={imageurl || Placeholder}
+            src={ urlPrefix + imageurl || Placeholder}
             alt="episode thumbnail" />
 
             <div className="w-[650px] h-[59px] ml-5">

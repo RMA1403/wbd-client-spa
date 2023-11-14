@@ -55,13 +55,15 @@ export default function App(): JSX.Element {
               path: "/episode/:episodeId",
               element: <EpisodePage/>,
             },
-              path: "/queue",
+            { path: "/queue",
               element: <QueuePage />,
               loader: userQueueLoader,
             },
           ],
-        },
-      ]),
+        },]
+      }
+      ])
+    
 
   return <RouterProvider router={router} />;
 }

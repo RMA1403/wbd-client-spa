@@ -19,7 +19,7 @@ export default function PodcastPage() : JSX.Element{
 
     return(
         <div className="ml-[100px]">
-            {episodeHeader? (<EpisodeHeader {...episodeHeader}/>) : <h1 className="h1">Episode Tidak Ditemukan</h1>}
+            {episodeHeader? (<EpisodeHeader {...episodeHeader}/>) : <h1 className="h1"></h1>}
         </div>
 
     );

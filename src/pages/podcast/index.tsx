@@ -27,7 +27,7 @@ export default function PodcastPage() : JSX.Element{
     
     return(
         <div className="ml-[100px]">
-            {podcastHeader? (<PodcastHeader {...podcastHeader}/>) : <h1 className="h1">Podcast Tidak Ditemukan</h1>}
+            {podcastHeader? (<PodcastHeader {...podcastHeader}/>) : <h1 className="h1"></h1>}
             <div>
                 <hr className="h-px mt-[30px] ml-[-100px] bg-black bg-opacity-40"/>
             </div>

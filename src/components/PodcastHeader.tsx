@@ -12,16 +12,17 @@ export type headerProps = {
   }
 
   export default function PodcastHeader({category, creator, title, description, imageurl}: headerProps): JSX.Element {
+    const urlPrefix = "http://localhost:3000/images/"
     return (
         <div className="block">
         <div className="w-[950px] inline-flex mt-[20px]">
 
             <div className="">
                 <div className="w-[225px] h-[225px]"> 
-                <img className="rounded-[20px]"
+                <img className="rounded-[20px] object-cover object-center w-[225px] h-[225px]"
                 width={225}
                 height={225}
-                src={imageurl || Placeholder} 
+                src={ urlPrefix + imageurl || Placeholder} 
                 alt="podcast thumbnail" />
                 </div>
 
