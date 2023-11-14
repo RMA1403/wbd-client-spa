@@ -54,6 +54,7 @@ export default function App(): JSX.Element {
             {
               path: "/profile",
               element: <ProfilePage />,
+              
             },
           ],
         },
