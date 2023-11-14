@@ -4,8 +4,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SidebarLayout from "./components/layouts/SidebarLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
 import HomePage from "./pages/home";
+import PodcastPage from "./pages/podcast";
+import EpisodePage from "./pages/episode"
 import QueuePage from "./pages/queue";
 import axios from "axios";
+import LibraryPage from "./pages/library";
 
 export default function App(): JSX.Element {
   const userQueueLoader = async () => {
@@ -43,18 +46,25 @@ export default function App(): JSX.Element {
             },
             {
               path: "/library",
-              element: <h1>Hello library</h1>,
+              element: <LibraryPage/>,
             },
             {
-              path: "/queue",
+              path: "/podcast/:podcastId",
+              element: <PodcastPage/>,
+            },
+            {
+              path: "/episode/:episodeId",
+              element: <EpisodePage/>,
+            },
+            { path: "/queue",
               element: <QueuePage />,
               loader: userQueueLoader,
             },
           ],
-        },
-      ],
-    },
-  ]);
+        },]
+      }
+      ])
+    
 
   return <RouterProvider router={router} />;
 }
