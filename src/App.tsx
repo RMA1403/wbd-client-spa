@@ -8,6 +8,7 @@ import PodcastPage from "./pages/podcast";
 import EpisodePage from "./pages/episode"
 import QueuePage from "./pages/queue";
 import axios from "axios";
+import LibraryPage from "./pages/library";
 
 export default function App(): JSX.Element {
   const userQueueLoader = async () => {
@@ -45,7 +46,7 @@ export default function App(): JSX.Element {
             },
             {
               path: "/library",
-              element: <h1>Hello Library</h1>,
+              element: <LibraryPage/>,
             },
             {
               path: "/podcast/:podcastId",

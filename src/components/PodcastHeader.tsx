@@ -62,7 +62,7 @@ export type headerProps = {
             width={16}
             height={16}
             src={PlusIcon} 
-            alt="" />
+            alt="plus icon" />
             </button>
 
             <button 
@@ -74,7 +74,7 @@ export type headerProps = {
             width={18}
             height={18}
             src={PlayIcon} 
-            alt="" />
+            alt="play podcast" />
             </button>
 
         </div>
