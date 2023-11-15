@@ -1,4 +1,5 @@
-import { useLoaderData } from "react-router-dom";
+import axios from "axios";
+import { useLoaderData, useRevalidator } from "react-router-dom";
 
 export type queueItem = {
   Episode: {
@@ -14,9 +15,33 @@ export type queueItem = {
 export default function QueuePage() {
   const queue = useLoaderData() as queueItem[];
 
+  const revalidator = useRevalidator();
+
+  const handleClearQueue = async () => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_REST_URL}/queue`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      revalidator.revalidate();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <section className="px-8 mb-8">
-      <h1 className="h1">Your Queue</h1>
+      <div className="w-full flex items-end justify-between">
+        <h1 className="h1">Your Queue</h1>
+        <h4
+          onClick={handleClearQueue}
+          className="h4 text-[#ed5c5c] hover:text-[#ed5c5c]/80 cursor-pointer"
+        >
+          Clear Queue
+        </h4>
+      </div>
 
       <ul className="w-full mt-[22px]">
         {queue.map((item, idx) => (
