@@ -8,7 +8,6 @@ const ProfilePage = ({setIsOpen}:{setIsOpen: (bool: boolean)=>void}) => {
 // const ProfilePage = () => {
     const [name, setName] = useState<string>("");
     const [username, setUsername] = useState<string>("");
-    const [message, setMessage] = useState<string>("");
     //useref
     const profileBox = useRef<HTMLDivElement>(null); 
     const background = useRef<HTMLDivElement>(null);
@@ -32,7 +31,7 @@ const ProfilePage = ({setIsOpen}:{setIsOpen: (bool: boolean)=>void}) => {
   const onHandleSubmit = () => {
     toast.promise((
     (async () => {
-      const res = await axios.put(
+      await axios.put(
         `${import.meta.env.VITE_REST_URL}/profile`, {
           name: name,
           username: username,
@@ -43,17 +42,12 @@ const ProfilePage = ({setIsOpen}:{setIsOpen: (bool: boolean)=>void}) => {
           }
         }
       )
-      console.log(res.status);
-      setMessage(res.data.message);
     })()
     ),{
       loading: 'Saving...',
-      success: <b>{message}</b>,
-      error: <b>{message}</b>,
+      success: <b>Profile updated successfully!</b>,
+      error: <b>Failed to update</b>,
     });
-    if (message == "Profile updated successfully!") {
-      setIsOpen(false);
-    }
   }
 
   return (
