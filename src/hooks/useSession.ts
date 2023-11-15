@@ -11,7 +11,8 @@ export default function useSession() {
 
   useEffect(() => {
     (async () => {
-      const token = localStorage.getItem("token") || queryToken;
+      try {
+        const token = localStorage.getItem("token") || queryToken;
 
       if (!token) {
         setLoading(false);
@@ -28,11 +29,16 @@ export default function useSession() {
         }
       );
 
-      if (res.data.message !== "error") {
+      console.log("halo");
+      if (res.data.message !== "user not subscribed" || res.data.message !== "invalid token") {
         setSessionValid(true);
       }
 
       setLoading(false);
+      } catch (err) {
+        setSessionValid(false);
+        setLoading(false);
+      }
     })();
   });
 

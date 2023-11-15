@@ -5,7 +5,7 @@ import SidebarLayout from "./components/layouts/SidebarLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
 import HomePage from "./pages/home";
 import QueuePage from "./pages/queue";
-import ProfilePage from "./pages/profile";
+import NotFoundPage from "./pages/not-found";
 import axios from "axios";
 
 export default function App(): JSX.Element {
@@ -51,14 +51,13 @@ export default function App(): JSX.Element {
               element: <QueuePage />,
               loader: userQueueLoader,
             },
-            {
-              path: "/profile",
-              element: <ProfilePage />,
-              
-            },
           ],
         },
       ],
+    },
+    {
+      path: "*",
+      element: <NotFoundPage />,
     },
   ]);
 
