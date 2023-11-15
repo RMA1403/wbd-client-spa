@@ -7,10 +7,10 @@ export type episodeProps = {
     order: number,
     title: string,
     description: string,
-    imageurl: string
+    url_thumbnail: string
   }
 
-  export default function EpisodeList({order, title, description, imageurl}: episodeProps): JSX.Element {
+  export default function EpisodeList({order, title, description, url_thumbnail}: episodeProps): JSX.Element {
     const urlPrefix = "http://localhost:3000/images/"
     return (
         <div className="group/item flex items-center w-[1100px] h-[110px] rounded-xl bg-white hover:bg-NAVY-5 text-black hover:text-white">
@@ -21,7 +21,7 @@ export type episodeProps = {
             className="rounded-lg w-[75px] h-[75px] object-cover object-center"
             width={75}
             height={75}
-            src={ urlPrefix + imageurl || Placeholder}
+            src={ urlPrefix + url_thumbnail || Placeholder}
             alt="episode thumbnail" />
 
             <div className="w-[650px] h-[59px] ml-5">

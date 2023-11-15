@@ -2,6 +2,7 @@
 import axios from "axios";
 import Placeholder from "../assets/placeholder_image.jpg";
 import PlayIcon from "../assets/play-icon.svg";
+import { Queue, useQueueDispatch } from "../contexts/QueueContext";
 
 export type cardProps = {
   idpodcast: number;
@@ -16,21 +17,34 @@ export default function PodcastCard({
   description,
   imageurl,
 }: cardProps): JSX.Element {
-  const handleAddToQueue = async () => {
-    const res = await axios.post(
-      `${import.meta.env.VITE_REST_URL}/queue/podcast`,
-      {
-        idPodcast: idpodcast,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+  const dispatchQueue = useQueueDispatch()
 
-    console.log(res.data.message);
+  const handleAddToQueue = async () => {
+    const axiosInstance = axios.create({
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    await axiosInstance.post(`${import.meta.env.VITE_REST_URL}/queue/podcast`, {
+      idPodcast: idpodcast,
+    });
+
+    const [current, next, prev] = await Promise.all([
+      axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/current`),
+      axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/next`),
+      axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/previous`),
+    ]);
+
+    const tempQueue: Queue = {
+      prev: prev.data.result,
+      current: current.data.result,
+      next: next.data.result,
+    };
+
+    dispatchQueue({ type: "SET_QUEUE", payload: tempQueue });
   };
+
   return (
     <div className="w-[160px] h-[230px] rounded-xl overflow-hidden border-NAVY-5 border-2 shadow-[-2px_2px_4px_0_#5C67DE,2px_-2px_4px_0_#5C67DE,-2px_-2px_4px_0_#5C67DE,2px_2px_4px_0_#5C67DE] hover:shadow-[-2px_2px_4px_0_#F5D049,2px_-2px_4px_0_#F5D049,-2px_-2px_4px_0_#F5D049,2px_2px_4px_0_#F5D049] hover:bg-YELLOW-5 hover:border-YELLOW-1 group shrink-0 xl:w-[200px] xl:h-[288px]">
       <img
