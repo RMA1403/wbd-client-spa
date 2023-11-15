@@ -2,7 +2,8 @@
 import axios from "axios";
 import Placeholder from "../assets/placeholder_image.jpg";
 import PlayIcon from "../assets/play-icon.svg";
-import { Queue, useQueueDispatch } from "../contexts/QueueContext";
+import { Queue, useQueue, useQueueDispatch } from "../contexts/QueueContext";
+import { useNavigate } from "react-router-dom";
 
 export type cardProps = {
   idpodcast: number;
@@ -17,18 +18,35 @@ export default function PodcastCard({
   description,
   imageurl,
 }: cardProps): JSX.Element {
-  const dispatchQueue = useQueueDispatch()
+  const dispatchQueue = useQueueDispatch();
+  const queue = useQueue();
 
-  const handleAddToQueue = async () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/podcast/${idpodcast}`);
+  };
+
+  const handleAddToQueue = async (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+
     const axiosInstance = axios.create({
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
+    await axiosInstance.delete(`${import.meta.env.VITE_REST_URL}/queue`);
+
     await axiosInstance.post(`${import.meta.env.VITE_REST_URL}/queue/podcast`, {
       idPodcast: idpodcast,
     });
+
+    if (queue.current) {
+      await axiosInstance.post(
+        `${import.meta.env.VITE_REST_URL}/queue/forward`
+      );
+    }
 
     const [current, next, prev] = await Promise.all([
       axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/current`),
@@ -46,7 +64,10 @@ export default function PodcastCard({
   };
 
   return (
-    <div className="w-[160px] h-[230px] rounded-xl overflow-hidden border-NAVY-5 border-2 shadow-[-2px_2px_4px_0_#5C67DE,2px_-2px_4px_0_#5C67DE,-2px_-2px_4px_0_#5C67DE,2px_2px_4px_0_#5C67DE] hover:shadow-[-2px_2px_4px_0_#F5D049,2px_-2px_4px_0_#F5D049,-2px_-2px_4px_0_#F5D049,2px_2px_4px_0_#F5D049] hover:bg-YELLOW-5 hover:border-YELLOW-1 group shrink-0 xl:w-[200px] xl:h-[288px]">
+    <div
+      onClick={handleNavigate}
+      className="cursor-pointer w-[160px] h-[230px] rounded-xl overflow-hidden border-NAVY-5 border-2 shadow-[-2px_2px_4px_0_#5C67DE,2px_-2px_4px_0_#5C67DE,-2px_-2px_4px_0_#5C67DE,2px_2px_4px_0_#5C67DE] hover:shadow-[-2px_2px_4px_0_#F5D049,2px_-2px_4px_0_#F5D049,-2px_-2px_4px_0_#F5D049,2px_2px_4px_0_#F5D049] hover:bg-YELLOW-5 hover:border-YELLOW-1 group shrink-0 xl:w-[200px] xl:h-[288px]"
+    >
       <img
         className="w-[160px] h-[140px] object-cover object-center xl:w-[200px] xl:h-[175px]"
         src={
@@ -62,7 +83,7 @@ export default function PodcastCard({
       <div className="pt-3 pb-5 px-1.5 w-full group-hover:text-NAVY-2 relative xl:pt-4 xl:pb-6 xl:px-2.5">
         <button
           onClick={handleAddToQueue}
-          className="invisible group-hover:visible flex absolute right-2.5 top-0 -translate-y-[10px] group-hover:-translate-y-[32px] items-center justify-center rounded-full bg-BLACK py-4 pl-[18px] pr-3.5 transition-transform duration-500"
+          className="invisible hover:scale-100 scale-90 group-hover:visible flex absolute right-2.5 top-0 -translate-y-[10px] group-hover:-translate-y-[32px] items-center justify-center rounded-full bg-BLACK py-4 pl-[18px] pr-3.5 transition-transform duration-500"
         >
           <img src={PlayIcon} width={16} height={16} alt="pause-episode" />
         </button>

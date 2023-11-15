@@ -27,14 +27,7 @@ export default function PodcastPage(): JSX.Element {
         ),
       ]);
 
-    //   const resPodcastHeader = await axiosInstance.get(
-    //     `${import.meta.env.VITE_REST_URL}/podcast/${podcastId}`
-    //   );
       setPodcastHeader(resPodcastHeader.data.podcast);
-
-    //   const resEpisodes = await axiosInstance.get(
-    //     `${import.meta.env.VITE_REST_URL}/podcast/episode/${podcastId}`
-    //   );
       setEpisodes(resEpisodes.data.episodes);
     })();
   }, [podcastId]);
@@ -54,6 +47,7 @@ export default function PodcastPage(): JSX.Element {
         {episodes?.map((episode: episodeProps, idx: number) => (
           <Episode
             key={idx}
+            id_episode={episode.id_episode}
             title={episode.title}
             description={episode.description}
             url_thumbnail={episode.url_thumbnail}

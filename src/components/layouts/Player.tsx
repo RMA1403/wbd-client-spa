@@ -33,6 +33,7 @@ export default function Player() {
   // Component states
   const [isPlaying, setPlaying] = useState(false);
   const [currProgress, setCurrProgress] = useState(0);
+  const [isInitialized, setInitialized] = useState(false);
 
   useEffect(() => {
     (async function () {
@@ -59,19 +60,36 @@ export default function Player() {
   }, [dispatchQueue]);
 
   useEffect(() => {
-    if (playerRef.current) {
-      playerRef.current.src = queue.current?.url_audio
-        ? `${import.meta.env.VITE_REST_URL}/audio/${queue.current?.url_audio}`
-        : "";
-    }
-  }, [queue]);
+    (async () => {
+      try {
+        if (playerRef.current) {
+          playerRef.current.src = queue.current?.url_audio
+            ? `${import.meta.env.VITE_REST_URL}/audio/${
+                queue.current?.url_audio
+              }`
+            : "";
+
+          if (!isInitialized) {
+            console.log("oke");
+            setInitialized(true);
+            setPlaying(false);
+            return;
+          }
+
+          playerRef.current.pause();
+          await playerRef.current.play();
+          setPlaying(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [queue, isInitialized]);
 
   const handlePlay = () => {
     setPlaying(true);
 
     if (playerRef.current) {
-      console.log(playerRef.current.src);
-
       playerRef.current.play();
     }
   };
@@ -135,7 +153,7 @@ export default function Player() {
       }
     );
 
-    if (res.status === 200) {
+    if (res.data.messsage === "success") {
       const prev = await axios.get(
         `${import.meta.env.VITE_REST_URL}/queue/previous`,
         {
@@ -154,6 +172,7 @@ export default function Player() {
       dispatchQueue({ type: "SET_QUEUE", payload: tempQueue });
       revalidator.revalidate();
     }
+    // !  Add hot toast here for error handling
   };
 
   return (

@@ -1,6 +1,8 @@
+import axios from "axios";
 import Placeholder from "../assets/placeholder_image.jpg";
 import PlayIcon from "../assets/play-icon.svg";
 import PlusIcon from "../assets/plus-icon.svg";
+import { Queue, useQueue, useQueueDispatch } from "../contexts/QueueContext";
 
 export type headerProps = {
   category: string;
@@ -8,6 +10,7 @@ export type headerProps = {
   title: string;
   description: string;
   url_thumbnail: string;
+  id_podcast: number;
 };
 
 export default function PodcastHeader({
@@ -16,8 +19,49 @@ export default function PodcastHeader({
   title,
   description,
   url_thumbnail,
+  id_podcast,
 }: headerProps): JSX.Element {
   const urlPrefix = "http://localhost:3000/images/";
+
+  const queue = useQueue();
+  const dispatchQueue = useQueueDispatch();
+
+  const handleAddToQueue = async (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+
+    const axiosInstance = axios.create({
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    await axiosInstance.delete(`${import.meta.env.VITE_REST_URL}/queue`);
+
+    await axiosInstance.post(`${import.meta.env.VITE_REST_URL}/queue/podcast`, {
+      idPodcast: id_podcast,
+    });
+
+    if (queue.current) {
+      await axiosInstance.post(
+        `${import.meta.env.VITE_REST_URL}/queue/forward`
+      );
+    }
+
+    const [current, next, prev] = await Promise.all([
+      axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/current`),
+      axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/next`),
+      axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/previous`),
+    ]);
+
+    const tempQueue: Queue = {
+      prev: prev.data.result,
+      current: current.data.result,
+      next: next.data.result,
+    };
+
+    dispatchQueue({ type: "SET_QUEUE", payload: tempQueue });
+  };
+
   return (
     <div className="block">
       <div className="w-[950px] inline-flex mt-[20px]">
@@ -71,6 +115,7 @@ export default function PodcastHeader({
         </button>
 
         <button
+          onClick={handleAddToQueue}
           data-te-toggle="tooltip"
           title="play episode"
           className=" w-[48px] h-[48px] bg-black text-white rounded-[32px] h4 leading-4 ml-[30px] hover:bg-gray-600"
