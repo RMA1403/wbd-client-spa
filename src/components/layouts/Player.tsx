@@ -2,33 +2,38 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useRevalidator } from "react-router-dom";
 
 // Asset imports
-import SampleImage1 from "../../assets/escape.jpg";
+import Placeholder from "../../assets/placeholder_image.jpg";
 
 import PlayIcon from "../../assets/play-icon.svg";
 import PauseIcon from "../../assets/pause-icon.svg";
 import ForwardIcon from "../../assets/forward-icon.svg";
 import QueueIcon from "../../assets/queue-icon.svg";
 import axios from "axios";
+import { Queue, useQueue, useQueueDispatch } from "../../contexts/QueueContext";
 
-type episode = {
+export type episode = {
   id_episode: number;
   title: string;
   description: string;
   url_thumbnail: string;
   url_audio: string;
   id_podcast: number;
+  PremiumPodcast: {
+    title: string;
+  };
 };
 
 export default function Player() {
   const playerRef = useRef<HTMLAudioElement | null>(null);
   const revalidator = useRevalidator();
 
+  const queue = useQueue();
+  const dispatchQueue = useQueueDispatch();
+
   // Component states
   const [isPlaying, setPlaying] = useState(false);
   const [currProgress, setCurrProgress] = useState(0);
-  const [currentQueue, setCurrentQueue] = useState<episode>();
-  const [nextQueue, setNextQueue] = useState<episode>();
-  const [prevQueue, setPrevQueue] = useState<episode>();
+  const [isInitialized, setInitialized] = useState(false);
 
   useEffect(() => {
     (async function () {
@@ -44,26 +49,47 @@ export default function Player() {
         axiosInstance.get(`${import.meta.env.VITE_REST_URL}/queue/previous`),
       ]);
 
-      setCurrentQueue(current.data.result);
-      setNextQueue(next.data.result);
-      setPrevQueue(prev.data.result);
+      const tempQueue: Queue = {
+        prev: prev.data.result,
+        current: current.data.result,
+        next: next.data.result,
+      };
+
+      dispatchQueue({ type: "SET_QUEUE", payload: tempQueue });
     })();
-  }, []);
+  }, [dispatchQueue]);
 
   useEffect(() => {
-    if (playerRef.current) {
-      playerRef.current.src = currentQueue?.url_audio
-        ? `${import.meta.env.VITE_REST_URL}/audio/${currentQueue?.url_audio}`
-        : "";
-    }
-  }, [currentQueue]);
+    (async () => {
+      try {
+        if (playerRef.current) {
+          playerRef.current.src = queue.current?.url_audio
+            ? `${import.meta.env.VITE_REST_URL}/audio/${
+                queue.current?.url_audio
+              }`
+            : "";
+
+          if (!isInitialized) {
+            console.log("oke");
+            setInitialized(true);
+            setPlaying(false);
+            return;
+          }
+
+          playerRef.current.pause();
+          await playerRef.current.play();
+          setPlaying(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [queue, isInitialized]);
 
   const handlePlay = () => {
     setPlaying(true);
 
     if (playerRef.current) {
-      console.log(playerRef.current.src);
-
       playerRef.current.play();
     }
   };
@@ -96,28 +122,23 @@ export default function Player() {
     );
 
     if (res.data.message === "success") {
-      setPrevQueue(() => {
-        const currQueueTemp = currentQueue;
-        setCurrentQueue(() => {
-          const nextQueueTemp = nextQueue;
+      const next = await axios.get(
+        `${import.meta.env.VITE_REST_URL}/queue/next`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-          axios
-            .get(`${import.meta.env.VITE_REST_URL}/queue/next`, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            })
-            .then((res) =>
-              setNextQueue(() => {
-                revalidator.revalidate();
-                return res.data.result;
-              })
-            );
+      const tempQueue: Queue = {
+        prev: queue.current,
+        current: queue.next,
+        next: next.data.result,
+      };
 
-          return nextQueueTemp;
-        });
-        return currQueueTemp;
-      });
+      dispatchQueue({ type: "SET_QUEUE", payload: tempQueue });
+      revalidator.revalidate();
     }
   };
 
@@ -132,38 +153,45 @@ export default function Player() {
       }
     );
 
-    if (res.status === 200) {
-      setNextQueue(() => {
-        const currQueueTemp = currentQueue;
-        setCurrentQueue(() => {
-          const prevQueueTemp = prevQueue;
+    if (res.data.messsage === "success") {
+      const prev = await axios.get(
+        `${import.meta.env.VITE_REST_URL}/queue/previous`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-          axios
-            .get(`${import.meta.env.VITE_REST_URL}/queue/previous`, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            })
-            .then((res) =>
-              setPrevQueue(() => {
-                revalidator.revalidate();
-                return res.data.result;
-              })
-            );
+      const tempQueue: Queue = {
+        prev: prev.data.result,
+        current: queue.prev,
+        next: queue.current,
+      };
 
-          return prevQueueTemp;
-        });
-        return currQueueTemp;
-      });
+      dispatchQueue({ type: "SET_QUEUE", payload: tempQueue });
+      revalidator.revalidate();
     }
+    // !  Add hot toast here for error handling
   };
 
   return (
-    <div className="p-4 w-full bg-YELLOW-5 xl:p-[22px]">
+    <div
+      style={{
+        transform: queue.current ? "translateY(0)" : "translateY(100%)",
+      }}
+      className="p-4 w-full bg-YELLOW-5 transition-transform duration-500 xl:p-[22px]"
+    >
       <div className="flex items-center gap-4">
         <img
           className="w-[75px] h-[75px] object-cover object-center rounded-xl xl:w-[100px] xl:h-[100px]"
-          src={SampleImage1}
+          src={
+            queue.current && queue.current.url_thumbnail
+              ? `${import.meta.env.VITE_REST_URL}/images/${
+                  queue.current.url_thumbnail
+                }`
+              : Placeholder
+          }
           width={100}
           height={100}
           alt="episode-thumbnail"
@@ -171,9 +199,11 @@ export default function Player() {
 
         <div className="flex flex-col gap-2 xl:gap-3">
           <h4 className="h4 md:max-xl:text-xs text-BLACK">
-            Ini Contoh Judul Episode Podcast Bisa Agak Panjang
+            {queue.current && queue.current.title}
           </h4>
-          <p className="h6 text-NAVY-3 md:max-xl:text-[10px]">User 101</p>
+          <p className="h6 text-NAVY-3 md:max-xl:text-[10px]">
+            {queue.current && queue.current.PremiumPodcast.title}
+          </p>
         </div>
       </div>
 
