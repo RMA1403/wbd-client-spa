@@ -11,7 +11,7 @@ export default function PodcastPage(): JSX.Element {
   useEffect(() => {
     (async () => {
       const resEpisodeHeader = await axios.get(
-        `http://localhost:3000/episode/${episodeId}`,
+        `${import.meta.env.VITE_REST_URL}/episode/${episodeId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

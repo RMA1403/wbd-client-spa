@@ -7,12 +7,10 @@ import SampleImage3 from "../assets/play.jpg";
 
 export type cardProps = {
   title: string;
-  imageurl: string;
 };
 
 export default function LibraryCard({
   title,
-//   imageurl
 }: cardProps): JSX.Element {
   return (
     <div className="w-[160px] h-[210px] rounded-xl overflow-hidden border-NAVY-5 border-2 shadow-[-2px_2px_4px_0_#5C67DE,2px_-2px_4px_0_#5C67DE,-2px_-2px_4px_0_#5C67DE,2px_2px_4px_0_#5C67DE] hover:shadow-[-2px_2px_4px_0_#F5D049,2px_-2px_4px_0_#F5D049,-2px_-2px_4px_0_#F5D049,2px_2px_4px_0_#F5D049] hover:bg-YELLOW-5 hover:border-YELLOW-1 group shrink-0 xl:w-[200px] xl:h-[288px]">
