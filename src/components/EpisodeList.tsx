@@ -20,7 +20,7 @@ export default function EpisodeList({
   url_thumbnail,
   id_episode,
 }: episodeProps): JSX.Element {
-  const urlPrefix = "http://localhost:3000/images/";
+  const urlPrefix = `${import.meta.env.VITE_REST_URL}/images/`;
 
   const dispatchQueue = useQueueDispatch();
   const queue = useQueue();
