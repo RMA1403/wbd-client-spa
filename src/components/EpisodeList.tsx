@@ -11,6 +11,7 @@ export type episodeProps = {
   title: string;
   description: string;
   url_thumbnail: string;
+  premium: boolean;
 };
 
 export default function EpisodeList({
@@ -19,15 +20,18 @@ export default function EpisodeList({
   description,
   url_thumbnail,
   id_episode,
+  premium,
 }: episodeProps): JSX.Element {
-  const urlPrefix = `${import.meta.env.VITE_REST_URL}/images/`;
+  const urlPrefix = premium
+    ? "http://localhost:3000/images/"
+    : "http://localhost:8080/app/storage";
 
   const dispatchQueue = useQueueDispatch();
   const queue = useQueue();
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`/episode/${id_episode}`);
+    navigate(`/episode/${id_episode}?premium=${premium}`);
   };
 
   const handlePlay = async (e: React.MouseEvent<HTMLElement>) => {
@@ -115,34 +119,38 @@ export default function EpisodeList({
           {description}
         </p>
       </div>
-      <button
-        onClick={handlePlay}
-        data-te-toggle="tooltip"
-        title="play episode"
-        className="invisible hover:scale-110 group-hover/item:visible flex items-center justify-center rounded-full bg-black w-[48px] h-[48px] ml-[70px] hover:bg-gray-600"
-      >
-        <img
-          className="ml-[5px]"
-          width={18}
-          height={18}
-          src={PlayIcon}
-          alt="play episode"
-        />
-      </button>
-      <button
-        onClick={handleAddToQueue}
-        data-te-toggle="tooltip"
-        title="add to queue"
-        className="invisible hover:scale-110 group-hover/item:visible flex items-center justify-center rounded-full bg-black w-[48px] h-[48px] ml-[30px] hover:bg-gray-600"
-      >
-        <img
-          className=""
-          width={18}
-          height={18}
-          src={PlusIcon}
-          alt="play episode"
-        />
-      </button>
+      {premium ? (
+        <>
+          <button
+            onClick={handlePlay}
+            data-te-toggle="tooltip"
+            title="play episode"
+            className="invisible hover:scale-110 group-hover/item:visible flex items-center justify-center rounded-full bg-black w-[48px] h-[48px] ml-[70px] hover:bg-gray-600"
+          >
+            <img
+              className="ml-[5px]"
+              width={18}
+              height={18}
+              src={PlayIcon}
+              alt="play episode"
+            />
+          </button>
+          <button
+            onClick={handleAddToQueue}
+            data-te-toggle="tooltip"
+            title="add to queue"
+            className="invisible hover:scale-110 group-hover/item:visible flex items-center justify-center rounded-full bg-black w-[48px] h-[48px] ml-[30px] hover:bg-gray-600"
+          >
+            <img
+              className=""
+              width={18}
+              height={18}
+              src={PlusIcon}
+              alt="play episode"
+            />
+          </button>
+        </>
+      ) : null}
     </div>
   );
 }

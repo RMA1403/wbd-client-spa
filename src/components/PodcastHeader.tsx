@@ -13,6 +13,7 @@ export type headerProps = {
   description: string;
   url_thumbnail: string;
   id_podcast: number;
+  premium: boolean;
 };
 
 export default function PodcastHeader({
@@ -22,8 +23,11 @@ export default function PodcastHeader({
   description,
   url_thumbnail,
   id_podcast,
+  premium,
 }: headerProps): JSX.Element {
-  const urlPrefix = `${import.meta.env.VITE_REST_URL}/images/`;
+  const urlPrefix = premium
+    ? "http://localhost:3000/images/"
+    : "http://localhost:8080/app/storage";
 
   const queue = useQueue();
   const dispatchQueue = useQueueDispatch();
@@ -129,37 +133,39 @@ export default function PodcastHeader({
         </div>
       </div>
 
-      <div className="block mt-[20px]">
-        <button
-          data-te-toggle="tooltip"
-          title="add episode to library"
-          className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4"
-        >
-          Add To Library
-          <img
-            className="inline ml-[45px]"
-            width={16}
-            height={16}
-            src={PlusIcon}
-            alt="plus icon"
-          />
-        </button>
+      {premium ? (
+        <div className="block mt-[20px]">
+          <button
+            data-te-toggle="tooltip"
+            title="add episode to library"
+            className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4"
+          >
+            Add To Library
+            <img
+              className="inline ml-[45px]"
+              width={16}
+              height={16}
+              src={PlusIcon}
+              alt="plus icon"
+            />
+          </button>
 
-        <button
-          onClick={handleAddToQueue}
-          data-te-toggle="tooltip"
-          title="play episode"
-          className=" w-[48px] h-[48px] bg-black text-white rounded-[32px] h4 leading-4 ml-[30px] hover:bg-gray-600"
-        >
-          <img
-            className="inline ml-[5px]"
-            width={18}
-            height={18}
-            src={PlayIcon}
-            alt="play podcast"
-          />
-        </button>
-      </div>
+          <button
+            onClick={handleAddToQueue}
+            data-te-toggle="tooltip"
+            title="play episode"
+            className=" w-[48px] h-[48px] bg-black text-white rounded-[32px] h4 leading-4 ml-[30px] hover:bg-gray-600"
+          >
+            <img
+              className="inline ml-[5px]"
+              width={18}
+              height={18}
+              src={PlayIcon}
+              alt="play podcast"
+            />
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

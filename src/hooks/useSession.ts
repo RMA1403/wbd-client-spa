@@ -14,27 +14,30 @@ export default function useSession() {
       try {
         const token = localStorage.getItem("token") || queryToken;
 
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
-      const res = await axios.post(
-        `${import.meta.env.VITE_REST_URL}/token/verify`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        if (!token) {
+          setLoading(false);
+          return;
         }
-      );
 
-      console.log("halo");
-      if (res.data.message !== "user not subscribed" || res.data.message !== "invalid token") {
-        setSessionValid(true);
-      }
+        const res = await axios.post(
+          `${import.meta.env.VITE_REST_URL}/token/verify`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      setLoading(false);
+        if (
+          res.data.message !== "user not subscribed" &&
+          res.data.message !== "invalid token" &&
+          res.data.message !== "error"
+        ) {
+          setSessionValid(true);
+        }
+
+        setLoading(false);
       } catch (err) {
         setSessionValid(false);
         setLoading(false);
