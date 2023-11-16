@@ -2,40 +2,47 @@ import { useEffect, useState } from "react";
 import Episode, { episodeProps } from "../../components/EpisodeList";
 import PodcastHeader, { headerProps } from "../../components/PodcastHeader";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 export default function PodcastPage(): JSX.Element {
   const { podcastId } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   // component states
   const [episodes, setEpisodes] = useState<episodeProps[]>([]);
   const [podcastHeader, setPodcastHeader] = useState<headerProps>();
 
   useEffect(() => {
     (async () => {
+      if (searchParams.get("premium") === null) {
+        navigate(`/podcast/${podcastId}?premium=true`);
+      }
+
       const axiosInstance = axios.create({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
-      const [resPodcastHeader, resEpisodes] = await Promise.all([
-        axiosInstance.get(
-          `${import.meta.env.VITE_REST_URL}/podcast/${podcastId}`
-        ),
-        axiosInstance.get(
-          `${import.meta.env.VITE_REST_URL}/podcast/episode/${podcastId}`
-        ),
-      ]);
+      const resPodcast = await axiosInstance.get(
+        `${
+          import.meta.env.VITE_REST_URL
+        }/podcast/${podcastId}?premium=${searchParams.get("premium")}`
+      );
 
-      setPodcastHeader(resPodcastHeader.data.podcast);
-      setEpisodes(resEpisodes.data.episodes);
+      setPodcastHeader(resPodcast.data.podcast);
+      setEpisodes(resPodcast.data.podcast.PremiumEpisodes);
     })();
-  }, [podcastId]);
+  }, [podcastId, searchParams, navigate]);
 
   return (
     <div className="ml-[100px]">
       {podcastHeader ? (
-        <PodcastHeader {...podcastHeader} />
+        <PodcastHeader
+          {...podcastHeader}
+          premium={searchParams.get("premium") == "true"}
+        />
       ) : (
         <h1 className="h1"></h1>
       )}
@@ -52,6 +59,7 @@ export default function PodcastPage(): JSX.Element {
             description={episode.description}
             url_thumbnail={episode.url_thumbnail}
             order={idx + 1}
+            premium={searchParams.get("premium") == "true"}
           />
         ))}
       </section>

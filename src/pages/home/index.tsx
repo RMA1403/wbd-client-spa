@@ -55,9 +55,18 @@ export default function HomePage(): JSX.Element {
         ),
       ]);
 
-      setTechPodcasts(resTech.data.podcasts);
-      setComedyPodcasts(resComedy.data.podcasts);
-      setHorrorPodcasts(resHorror.data.podcasts);
+      setTechPodcasts([
+        ...resTech.data.premiumPodcasts,
+        ...resTech.data.regularPodcasts,
+      ]);
+      setComedyPodcasts([
+        ...resComedy.data.premiumPodcasts,
+        ...resComedy.data.regularPodcasts,
+      ]);
+      setHorrorPodcasts([
+        ...resHorror.data.premiumPodcasts,
+        ...resHorror.data.regularPodcasts,
+      ]);
     })();
   }, []);
 

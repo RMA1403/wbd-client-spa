@@ -153,7 +153,7 @@ export default function Player() {
       }
     );
 
-    if (res.data.messsage === "success") {
+    if (res.data.message === "success") {
       const prev = await axios.get(
         `${import.meta.env.VITE_REST_URL}/queue/previous`,
         {

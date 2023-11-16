@@ -45,7 +45,7 @@ export default function SidebarLayout(): JSX.Element {
   }
 
   return (
-    <div className="w-full h-screen hidden md:flex">
+    <div className="w-full h-screen overflow-hidden hidden md:flex">
       <aside className="w-[30vw] h-screen bg-WHITE flex flex-col justify-between items-center shadow-[2px_0_20px_0_rgba(0,0,0,0.25)] lg:w-[25vw]">
         <div className="w-full">
           <Navigation />

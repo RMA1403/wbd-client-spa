@@ -55,7 +55,9 @@ export default function QueuePage() {
               </p>
               <img
                 className="object-cover object-center ml-4 rounded-lg w-[50px] h-[50px]"
-                src={item.Episode.url_thumbnail}
+                src={`${import.meta.env.VITE_REST_URL}/images/${
+                  item.Episode.url_thumbnail
+                }`}
                 width={50}
                 height={50}
                 alt="episode thumbnail"

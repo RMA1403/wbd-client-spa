@@ -10,6 +10,7 @@ export type cardProps = {
   title: string;
   description: string;
   imageurl: string;
+  premium: boolean;
 };
 
 export default function PodcastCard({
@@ -17,14 +18,19 @@ export default function PodcastCard({
   title,
   description,
   imageurl,
+  premium,
 }: cardProps): JSX.Element {
+  const urlPrefix = premium
+    ? "http://localhost:3000/images/"
+    : "http://localhost:8080/app/storage";
+
   const dispatchQueue = useQueueDispatch();
   const queue = useQueue();
 
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`/podcast/${idpodcast}`);
+    navigate(`/podcast/${idpodcast}?premium=${premium}`);
   };
 
   const handleAddToQueue = async (e: React.MouseEvent<HTMLElement>) => {
@@ -70,11 +76,7 @@ export default function PodcastCard({
     >
       <img
         className="w-[160px] h-[140px] object-cover object-center xl:w-[200px] xl:h-[175px]"
-        src={
-          imageurl
-            ? `${import.meta.env.VITE_REST_URL}/images/${imageurl}`
-            : Placeholder
-        }
+        src={urlPrefix + imageurl || Placeholder}
         width={200}
         height={175}
         alt="podcast-thumbnail"

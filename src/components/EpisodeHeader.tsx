@@ -9,6 +9,7 @@ export type headerProps = {
   description: string;
   url_thumbnail: string;
   id_episode: number;
+  premium: boolean;
 };
 
 export default function EpisodeHeader({
@@ -16,8 +17,11 @@ export default function EpisodeHeader({
   description,
   url_thumbnail,
   id_episode,
+  premium,
 }: headerProps): JSX.Element {
-  const urlPrefix = "http://localhost:3000/images/";
+  const urlPrefix = premium
+    ? "http://localhost:3000/images/"
+    : "http://localhost:8080/app/storage";
 
   const queue = useQueue();
   const dispatchQueue = useQueueDispatch();
@@ -108,39 +112,41 @@ export default function EpisodeHeader({
         </div>
       </div>
 
-      <div className="block mt-[20px]">
-        <button
-          onClick={handlePlay}
-          data-te-toggle="tooltip"
-          title="play episode"
-          className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4"
-        >
-          Play Episode
-          <img
-            className="inline ml-[45px]"
-            width={16}
-            height={16}
-            src={PlayIcon}
-            alt=""
-          />
-        </button>
+      {premium ? (
+        <div className="block mt-[20px]">
+          <button
+            onClick={handlePlay}
+            data-te-toggle="tooltip"
+            title="play episode"
+            className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4"
+          >
+            Play Episode
+            <img
+              className="inline ml-[45px]"
+              width={16}
+              height={16}
+              src={PlayIcon}
+              alt=""
+            />
+          </button>
 
-        <button
-          onClick={handleAddToQueue}
-          data-te-toggle="tooltip"
-          title="add episode to queue"
-          className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4 ml-[30px]"
-        >
-          Add To Queue
-          <img
-            className="inline ml-[45px]"
-            width={16}
-            height={16}
-            src={PlusIcon}
-            alt=""
-          />
-        </button>
-      </div>
+          <button
+            onClick={handleAddToQueue}
+            data-te-toggle="tooltip"
+            title="add episode to queue"
+            className=" w-[225px] h-[50px] bg-NAVY-5 text-white rounded-[32px] h4 leading-4 ml-[30px]"
+          >
+            Add To Queue
+            <img
+              className="inline ml-[45px]"
+              width={16}
+              height={16}
+              src={PlusIcon}
+              alt=""
+            />
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
