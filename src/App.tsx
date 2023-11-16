@@ -63,7 +63,7 @@ export default function App(): JSX.Element {
               loader: userQueueLoader,
             },
             {
-              path: "/playlist/:playlistId",
+              path: "/playlist/:idPlaylist",
               element: <PlaylistPage/>,
             }
           ],

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function PlaylistPage(): JSX.Element {
-  const { playlistId } = useParams();
+  const { idPlaylist } = useParams();
   // component states
   const [playlistTitle, setPlaylistTitle] = useState<string>("");
   const [playlistPodcast, setPlaylistPodcast] = useState<cardProps[]>([]);
@@ -22,21 +22,21 @@ export default function PlaylistPage(): JSX.Element {
 
       const [resPlaylistTitle, resPlaylistPodcast] = await Promise.all([
         axiosInstance.get(
-          `${import.meta.env.VITE_REST_URL}/playlist/title/${playlistId}`
+          `${import.meta.env.VITE_REST_URL}/playlist/title/${idPlaylist}`
         ),
         axiosInstance.get(
-          `${import.meta.env.VITE_REST_URL}/playlist/${playlistId}`
+          `${import.meta.env.VITE_REST_URL}/playlist/${idPlaylist}`
         ),
       ]);
 
-    //   if(!resPlaylistTitle.data.title)  {
-    //     navigate(`/`);
-    //   }
+      if(!resPlaylistTitle.data.playlist)  {
+        navigate(`/`);
+      }
 
-      setPlaylistTitle(resPlaylistTitle.data.title);
+      setPlaylistTitle(resPlaylistTitle.data.playlist);
       setPlaylistPodcast(resPlaylistPodcast.data.podcasts);
     })();
-  }, [playlistId, navigate]);
+  }, [idPlaylist, navigate]);
 
   return (
     <section className="px-6 pb-10 xl:px-8 xl:pb-20 mt-8">
