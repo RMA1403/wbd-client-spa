@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 // Asset imports
 import SampleImage1 from "../../assets/escape.jpg";
 import ProfilePage from "../../pages/profile";
+import SubscriptionPage from "../../pages/subscription";
 import { useState} from "react";
 
 export default function ProfileLayout(): JSX.Element {
@@ -26,7 +27,7 @@ export default function ProfileLayout(): JSX.Element {
         </div>
       </aside>
       {isOpen ? <ProfilePage setIsOpen={setIsOpen} /> : <></>}
-      {/* {isSubsOpen ? <ProfilePage setIsSubsOpen={setIsSubsOpen} /> : <></>} */}
+      {isSubsOpen ? <SubscriptionPage setIsSubsOpen={setIsSubsOpen} /> : <></>}
       <Outlet />
     </>
   );
