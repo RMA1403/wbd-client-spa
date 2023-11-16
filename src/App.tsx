@@ -47,7 +47,7 @@ export default function App(): JSX.Element {
               element: <h1>Hello search</h1>,
             },
             {
-              path: "/library/:userId",
+              path: "/library",
               element: <LibraryPage/>,
             },
             {

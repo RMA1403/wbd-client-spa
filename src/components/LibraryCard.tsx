@@ -5,6 +5,7 @@ import SampleImage1 from "../assets/escape.jpg";
 import SampleImage2 from "../assets/hello.jpg";
 import SampleImage3 from "../assets/play.jpg";
 import { useNavigate } from "react-router-dom";
+// import axios from "axios"
 
 export type cardProps = {
   title: string;
@@ -17,8 +18,20 @@ export default function LibraryCard({
 }: cardProps): JSX.Element {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate(`/podcast/${id_playlist}`);
+    navigate(`/playlist/${id_playlist}`);
   };
+
+  // const handleDeleteLibrary = async () => {
+  //   const axiosInstance = axios.create({
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     },
+  //   });
+
+  //   await axiosInstance.delete(`${import.meta.env.VITE_REST_URL}/library/${id_playlist}`, {
+  //     idPlaylist: id_playlist,
+  //   });
+  // };
   
 
   return (

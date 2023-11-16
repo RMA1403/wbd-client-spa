@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import PodcastCard, { cardProps } from "../../components/PodcastCard";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PlaylistPage(): JSX.Element {
   const { playlistId } = useParams();
   // component states
   const [playlistTitle, setPlaylistTitle] = useState<string>("");
   const [playlistPodcast, setPlaylistPodcast] = useState<cardProps[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -26,10 +29,14 @@ export default function PlaylistPage(): JSX.Element {
         ),
       ]);
 
-      setPlaylistTitle(resPlaylistTitle.data.playlist);
+    //   if(!resPlaylistTitle.data.title)  {
+    //     navigate(`/`);
+    //   }
+
+      setPlaylistTitle(resPlaylistTitle.data.title);
       setPlaylistPodcast(resPlaylistPodcast.data.podcasts);
     })();
-  }, [playlistId]);
+  }, [playlistId, navigate]);
 
   return (
     <section className="px-6 pb-10 xl:px-8 xl:pb-20 mt-8">

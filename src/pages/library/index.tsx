@@ -1,12 +1,12 @@
 import LibraryCard, { cardProps } from "../../components/LibraryCard";
 import PlusIcon from "../../assets/plus-icon.svg";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios"
 import toast, {Toaster} from 'react-hot-toast';
 
 export default function LibraryPage() : JSX.Element{
-  const { userId } = useParams();
+  // const { userId } = useParams();
   const [isVisible, setIsVisible] = useState(false);
   const [libraryData, setLibraryData] = useState<cardProps[]>([]);
   const [newPlaylistTitle, setNewPlaylistTitle] = useState<string>("");
@@ -16,10 +16,9 @@ export default function LibraryPage() : JSX.Element{
     toast.promise((
       (async () => {
         await axios.post(
-          `${import.meta.env.VITE_REST_URL}/library/${userId}`,
+          `${import.meta.env.VITE_REST_URL}/library`,
           {
             title: newPlaylistTitle,
-            idUser: userId,
           },
           {
             headers: {
@@ -42,7 +41,7 @@ export default function LibraryPage() : JSX.Element{
   useEffect(() => {
     (async () => {
       const resLibaryData = await axios.get(
-        `${import.meta.env.VITE_REST_URL}/library/${userId}`,
+        `${import.meta.env.VITE_REST_URL}/library`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -51,7 +50,7 @@ export default function LibraryPage() : JSX.Element{
       );
       setLibraryData(resLibaryData.data.playlists);
     })();
-  }, [userId]);
+  }, []);
 
     return(
     <section className="px-6 pb-10 xl:px-8 xl:pb-20 mt-8">

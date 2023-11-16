@@ -3,12 +3,14 @@ import Episode, { episodeProps } from "../../components/EpisodeList";
 import PodcastHeader, { headerProps } from "../../components/PodcastHeader";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PodcastPage(): JSX.Element {
   const { podcastId } = useParams();
   // component states
   const [episodes, setEpisodes] = useState<episodeProps[]>([]);
   const [podcastHeader, setPodcastHeader] = useState<headerProps>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -27,10 +29,13 @@ export default function PodcastPage(): JSX.Element {
         ),
       ]);
 
+      if(!resPodcastHeader.data.podcast) {
+        navigate(`/`);
+      }
       setPodcastHeader(resPodcastHeader.data.podcast);
       setEpisodes(resEpisodes.data.episodes);
     })();
-  }, [podcastId]);
+  }, [podcastId, navigate]);
 
   return (
     <div className="ml-[100px]">
