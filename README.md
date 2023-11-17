@@ -19,10 +19,10 @@ Aplikasi Premium Podcast App adalah versi premium dari aplikasi php yang telah d
 ![](./docs/halaman-podcast.png)
 
 ## Pembagian Tugas
-Halaman Home      : 
-Halaman Search    : 
-Halaman Library   : 
-Halaman Queue     :    
-Halaman Podcast   : 
-Halaman Episode   : 
-Halaman Profile   :
+Halaman Home      : 13521149  
+Halaman Search    : 13521119  
+Halaman Library   : 13521079  
+Halaman Queue     : 13521149  
+Halaman Podcast   : 13521079  
+Halaman Episode   : 13521079  
+Halaman Profile   : 13521119  
