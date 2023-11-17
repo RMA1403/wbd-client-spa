@@ -30,7 +30,7 @@ export default function PodcastPage(): JSX.Element {
           import.meta.env.VITE_REST_URL
         }/podcast/${podcastId}?premium=${searchParams.get("premium")}`
       );
-      if(!resPodcast.data.podcast) {
+      if (!resPodcast.data.podcast) {
         navigate(`/`);
       }
       setPodcastHeader(resPodcast.data.podcast);
@@ -39,7 +39,7 @@ export default function PodcastPage(): JSX.Element {
   }, [podcastId, searchParams, navigate]);
 
   return (
-    <div className="ml-[100px]">
+    <div className="ml-[32px] xl:ml-[100px]">
       {podcastHeader ? (
         <PodcastHeader
           {...podcastHeader}
@@ -52,7 +52,7 @@ export default function PodcastPage(): JSX.Element {
         <hr className="h-px mt-[30px] ml-[-100px] bg-black bg-opacity-40" />
       </div>
 
-      <section className="mt-[20px] overflow-y-scroll h-[60vh] mb-[60px]">
+      <section className="mt-[20px] overflow-y-scroll h-[60vh] pb-[60px] ml-[-16px] xl:ml-0">
         {episodes?.map((episode: episodeProps, idx: number) => (
           <Episode
             key={idx}
