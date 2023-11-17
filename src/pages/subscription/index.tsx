@@ -48,16 +48,11 @@ const SubscriptionPage = ({setIsSubsOpen}:{setIsSubsOpen: (bool: boolean)=>void}
           <button className="flex self-end" onClick={() => setIsSubsOpen(false)}>
             <IoClose size="30px"/>
           </button>
-          <p className="flex self-center">SUBSCRIPTION</p>
+          <p className="flex self-center font-bold text-3xl">SUBSCRIPTION</p>
           <div className="flex flex-row p-12 items-center gap-14">
-              <img 
-                className="w-[200px] h-[200px] object-cover object-center rounded-full outline outline-white"
-                src={import.meta.env.VITE_PHP_STORAGE_URL}
-                alt="image"
-              />
               <ul className="flex flex-col text-black font-semibold gap-5">
                 <li className="">
-                  <div className="">Expired date</div>
+                  <div className="self-center">Expired date</div>
                   <input className="border-0 rounded-lg font-thin" value={expiredDate} type="text" disabled/>
                 </li>
               </ul>

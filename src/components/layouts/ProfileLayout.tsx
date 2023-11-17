@@ -22,7 +22,7 @@ export default function ProfileLayout(): JSX.Element {
             alt=""
           />
         </button>
-        <div onClick={() => setIsSubsOpen(!isSubsOpen)} className="bg-YELLOW-5 py-1 px-4 rounded-3xl xl:py-2 xl:px-6 xl:rounded-[32px]">
+        <div onClick={() => setIsSubsOpen(!isSubsOpen)} className="bg-YELLOW-5 py-1 px-4 rounded-3xl xl:py-2 xl:px-6 xl:rounded-[32px] cursor-pointer hover:scale-110 hover:opacity-75">
           <p className="h5 md:max-xl:text-[10px]">Premium User</p>
         </div>
       </aside>

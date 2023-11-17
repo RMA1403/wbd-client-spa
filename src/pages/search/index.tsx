@@ -1,6 +1,7 @@
 import {  } from "@chakra-ui/react";
 import SearchIconBlack from "../../assets/search-icon-black.svg";
 import PodcastCard, { cardProps } from "../../components/PodcastCard";
+import EpisodeCard, { cardEpsProps } from "../../components/EpisodeCard";
 import { useEffect, useState, ChangeEvent } from "react";
 import axios from "axios";
 import Select, {ActionMeta} from 'react-select';
@@ -15,7 +16,7 @@ import Select, {ActionMeta} from 'react-select';
 
 const SearchPage = () => {
   const [podcasts, setPodcasts] = useState<cardProps[]>([]);
-  const [episodes, setEpisodes] = useState<cardProps[]>([]);
+  const [episodes, setEpisodes] = useState<cardEpsProps[]>([]);
   const [keyword, setKeyword] = useState<string>("");
   const [selectedGenre, setSelectedGenre] = useState<string | null>("");
   const [isShowPodcast, setIsShowPodcast] = useState<boolean>(true);
@@ -89,6 +90,7 @@ const SearchPage = () => {
           </div>
         </div>
         <div>
+          <button onClick={() => {setIsShowEps(true); setIsShowPodcast(true)}}>all</button>
           <button onClick={() => {setIsShowEps(false); setIsShowPodcast(true)}}>podcast</button>
            <button onClick={() => {setIsShowPodcast(false); setIsShowEps(true)}}>eps</button>
         </div>
@@ -113,8 +115,8 @@ const SearchPage = () => {
             <div>
               <p>EPISODE</p>
             {
-              episodes.map((eps: cardProps, idx: number) => (
-                <PodcastCard key={idx} {...eps} />
+              episodes.map((eps: cardEpsProps, idx: number) => (
+                <EpisodeCard key={idx} {...eps} />
               ))}
 
             </div>
