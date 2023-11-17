@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SidebarLayout from "./components/layouts/SidebarLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
 import HomePage from "./pages/home";
+import SearchPage from "./pages/search";
 import PodcastPage from "./pages/podcast";
 import EpisodePage from "./pages/episode"
 import QueuePage from "./pages/queue";
@@ -44,7 +45,7 @@ export default function App(): JSX.Element {
             },
             {
               path: "/search",
-              element: <h1>Hello search</h1>,
+              element: <SearchPage/>,
             },
             {
               path: "/library",
