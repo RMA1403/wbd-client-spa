@@ -89,10 +89,10 @@ const SearchPage = () => {
             />
           </div>
         </div>
-        <div>
-          <button onClick={() => {setIsShowEps(true); setIsShowPodcast(true)}}>all</button>
-          <button onClick={() => {setIsShowEps(false); setIsShowPodcast(true)}}>podcast</button>
-           <button onClick={() => {setIsShowPodcast(false); setIsShowEps(true)}}>eps</button>
+        <div className="flex flex-row gap-2">
+          <button className="flex bg-yellow text-black" onClick={() => {setIsShowEps(true); setIsShowPodcast(true)}}>all</button>
+          <button className="flex bg-yellow text-black" onClick={() => {setIsShowEps(false); setIsShowPodcast(true)}}>podcast</button>
+           <button className="flex bg-yellow text-black" onClick={() => {setIsShowPodcast(false); setIsShowEps(true)}}>eps</button>
         </div>
         
       </div>
@@ -102,23 +102,26 @@ const SearchPage = () => {
           {
             isShowPodcast ? 
             <div>
-              <p>PODCAST</p>
-            {podcasts
-              .map((podcast: cardProps, idx: number) => (
-                <PodcastCard key={idx} {...podcast} />
-              ))}
+              <p className="text-black text-3xl">PODCAST</p>
+              <div className="grid grid-cols-5 content-start gap-4">
+                {podcasts
+                  .map((podcast: cardProps, idx: number) => (
+                    <PodcastCard key={idx} {...podcast} />
+                  ))}
+              </div>
+
             </div>
             : <></>
           }
           {
             isShowEps ? 
             <div>
-              <p>EPISODE</p>
-            {
-              episodes.map((eps: cardEpsProps, idx: number) => (
-                <EpisodeCard key={idx} {...eps} />
-              ))}
-
+              <p className="text-black text-3xl">EPISODE</p>
+              <div className="grid grid-cols-5 content-start gap-4">
+                { episodes.map((eps: cardEpsProps, idx: number) => (
+                  <EpisodeCard key={idx} {...eps} />
+                ))}
+              </div>
             </div>
             : <></>
           }

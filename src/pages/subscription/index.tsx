@@ -18,15 +18,15 @@ const SubscriptionPage = ({setIsSubsOpen}:{setIsSubsOpen: (bool: boolean)=>void}
             }
             );
     
-            setExpiredDate(res.data.expired_date);
+            setExpiredDate(res.data.result);
         })();
-    }, []);
+    }, [expiredDate]);
 
     const onHandleExtend = () => {
         toast.promise((
         (async () => {
           await axios.post(
-            `${import.meta.env.VITE_REST_URL}/subs/extend`,{
+            `${import.meta.env.VITE_REST_URL}/subs/extend`, {},{
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
               }
@@ -34,7 +34,7 @@ const SubscriptionPage = ({setIsSubsOpen}:{setIsSubsOpen: (bool: boolean)=>void}
           )
         })()
         ),{
-          loading: 'Saving...',
+          loading: 'Loading...',
           success: <b>Your Subscription has extended!</b>,
           error: <b>Failed to extend</b>,
         });
@@ -53,11 +53,11 @@ const SubscriptionPage = ({setIsSubsOpen}:{setIsSubsOpen: (bool: boolean)=>void}
               <ul className="flex flex-col text-black font-semibold gap-5">
                 <li className="">
                   <div className="self-center">Expired date</div>
-                  <input className="border-0 rounded-lg font-thin" value={expiredDate} type="text" disabled/>
+                  <input className="border-0 rounded-lg font-thin text-black" value={expiredDate} type="text" disabled/>
                 </li>
               </ul>
           </div>
-          <button className="bg-white rounded-full px-8 py-4 font-semibold" onClick={onHandleExtend} >Extend</button>
+          <button className="bg-white rounded-full px-8 py-4 font-semibold hover:scale-110" onClick={onHandleExtend} >Extend</button>
       </div>
     </section>
   );
