@@ -4,7 +4,6 @@ import PodcastCard, { cardProps } from "../../components/PodcastCard";
 import EpisodeCard, { cardEpsProps } from "../../components/EpisodeCard";
 import { useEffect, useState, ChangeEvent } from "react";
 import axios from "axios";
-import Select, {ActionMeta} from 'react-select';
 
 // const ChevronIcon = ({isDown} : {isDown : boolean}) => {
 //   return (
@@ -18,20 +17,14 @@ const SearchPage = () => {
   const [podcasts, setPodcasts] = useState<cardProps[]>([]);
   const [episodes, setEpisodes] = useState<cardEpsProps[]>([]);
   const [keyword, setKeyword] = useState<string>("");
-  const [selectedGenre, setSelectedGenre] = useState<string | null>("");
   const [isShowPodcast, setIsShowPodcast] = useState<boolean>(true);
   const [isShowEps, setIsShowEps] = useState<boolean>(true);
 
-  const genres: string[] = [
-    'comedy',
-    'technology',
-    'horror',
-  ];
 
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:3000/search/podcast?keyword=${keyword}&genre=${selectedGenre}`,
+        `http://localhost:3000/search/podcast?keyword=${keyword}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,12 +36,12 @@ const SearchPage = () => {
         res.data.regularPodcasts,
       ]);
     })()
-  }, [keyword, selectedGenre])
+  }, [keyword])
 
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:3000/search/episode?keyword=${keyword}&genre=${selectedGenre}`,
+        `http://localhost:3000/search/episode?keyword=${keyword}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -60,17 +53,11 @@ const SearchPage = () => {
         res.data.regularEpisodes,
       ]);
     })()
-  }, [keyword, selectedGenre])
+  }, [keyword])
 
   const handleSearch = (e:ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }
-
-  const onHandleGenre = (option: string | null, actionMeta: ActionMeta<string>) => {
-    setSelectedGenre(option);
-    actionMeta.action === "clear" && setSelectedGenre(null);
-  }
-  
   
 
   return (
@@ -92,11 +79,6 @@ const SearchPage = () => {
 
           {/* filter */}
           <div className="flex">
-            <Select 
-              options={genres} 
-              placeholder="Genre" 
-              onChange={onHandleGenre} 
-            />
           </div>
         </div>
         <div className="flex flex-row gap-2 ml-8 mt-2">
