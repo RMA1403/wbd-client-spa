@@ -10,7 +10,7 @@ const SubscriptionPage = ({setIsSubsOpen}:{setIsSubsOpen: (bool: boolean)=>void}
     useEffect (() => {
         (async () => {
             const res = await axios.get(
-            `${import.meta.env.VITE_REST_URL}/subscription`,
+            `${import.meta.env.VITE_REST_URL}/subs/expired`,
             {
                 headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -25,8 +25,8 @@ const SubscriptionPage = ({setIsSubsOpen}:{setIsSubsOpen: (bool: boolean)=>void}
     const onHandleExtend = () => {
         toast.promise((
         (async () => {
-          await axios.put(
-            `${import.meta.env.VITE_REST_URL}/profile`,{
+          await axios.post(
+            `${import.meta.env.VITE_REST_URL}/subs/extend`,{
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
               }
