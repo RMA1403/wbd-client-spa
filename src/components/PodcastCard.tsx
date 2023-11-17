@@ -83,12 +83,14 @@ export default function PodcastCard({
       />
 
       <div className="pt-3 pb-5 px-1.5 w-full group-hover:text-NAVY-2 relative xl:pt-4 xl:pb-6 xl:px-2.5">
-        <button
-          onClick={handleAddToQueue}
-          className="invisible hover:scale-100 scale-90 group-hover:visible flex absolute right-2.5 top-0 -translate-y-[10px] group-hover:-translate-y-[32px] items-center justify-center rounded-full bg-BLACK py-4 pl-[18px] pr-3.5 transition-transform duration-500"
-        >
-          <img src={PlayIcon} width={16} height={16} alt="pause-episode" />
-        </button>
+        {premium ? (
+          <button
+            onClick={handleAddToQueue}
+            className="invisible hover:scale-100 scale-90 group-hover:visible flex absolute right-2.5 top-0 -translate-y-[10px] group-hover:-translate-y-[32px] items-center justify-center rounded-full bg-BLACK py-4 pl-[18px] pr-3.5 transition-transform duration-500"
+          >
+            <img src={PlayIcon} width={16} height={16} alt="pause-episode" />
+          </button>
+        ) : null}
 
         <h4 className="h5 w-full text-ellipsis whitespace-nowrap overflow-hidden md:max-xl:text-xs">
           {title}
