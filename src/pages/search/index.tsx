@@ -1,10 +1,9 @@
 import {  } from "@chakra-ui/react";
 import SearchIconBlack from "../../assets/search-icon-black.svg";
-// import ChevronDownIcon from "../../assets/chevron-down.svg";
-// import ChevronUpIcon from "../../assets/chevron-up.svg";
+import PodcastCard, { cardProps } from "../../components/PodcastCard";
 import { useEffect, useState, ChangeEvent } from "react";
 import axios from "axios";
-import Select, {SingleValue, ActionMeta} from 'react-select';
+import Select, {ActionMeta} from 'react-select';
 
 // const ChevronIcon = ({isDown} : {isDown : boolean}) => {
 //   return (
@@ -15,45 +14,52 @@ import Select, {SingleValue, ActionMeta} from 'react-select';
 
 
 const SearchPage = () => {
-  const [result, setResult] = useState([]);
-  const [keyword, setKeyword] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState<string>("");
-  const [selectedEpLength, setSelectedEpLength] = useState<number>(0);
+  const [podcasts, setPodcasts] = useState<cardProps[]>([]);
+  const [episodes, setEpisodes] = useState<cardProps[]>([]);
+  const [keyword, setKeyword] = useState<string>("");
+  const [selectedGenre, setSelectedGenre] = useState<string | null>("");
+  const [isShowPodcast, setIsShowPodcast] = useState<boolean>(true);
+  const [isShowEps, setIsShowEps] = useState<boolean>(true);
 
-  const genres: {value:string, label:string}[] = [
-    { value: 'COMEDY', label: 'Comedy' },
-    { value: 'TECHNOLOGY', label: 'Technology' },
-    { value: 'HORROR', label: 'Horror' },
-  ];
-
-  const epsLengths: {value:number, label:string}[] = [
-    { value: 50, label: 'Less than 50' },
-    { value: 100, label: '50 until 100' },
-    { value: 999, label: 'More than 100' },
+  const genres: string[] = [
+    'comedy',
+    'technology',
+    'horror',
   ];
 
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:3000/search/${keyword}/${selectedGenre}/${selectedEpLength}`
+        `http://localhost:3000/search/podcast?keyword=${keyword}&genre=${selectedGenre}`
       );
-      setResult(res.data.podcasts);
+      setPodcasts([
+        res.data.premiumPodcasts,
+        res.data.regularPodcasts,
+      ]);
     })
-  }, )
+  }, [keyword, selectedGenre])
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(
+        `http://localhost:3000/search/episode?keyword=${keyword}&genre=${selectedGenre}`
+      );
+      setEpisodes([
+        res.data.premiumEpisodes,
+        res.data.regularEpisodes,
+      ]);
+    })
+  }, [keyword, selectedGenre])
 
   const handleSearch = (e:ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }
 
-  const onHandleGenre = (newValue: SingleValue<{ value: string; label: string; }>, actionMeta: ActionMeta<{ value: string; label: string; }>) => {
-    if (newValue) setSelectedGenre(newValue.value);
-    actionMeta
-  };
+  const onHandleGenre = (option: string | null, actionMeta: ActionMeta<string>) => {
+    setSelectedGenre(option);
+    actionMeta.action === "clear" && setSelectedGenre(null);
+  }
   
-  const onHandleEps = (newValue: SingleValue<{ value: number; label: string; }>, actionMeta: ActionMeta<{ value: number; label: string; }>) => {
-    if (newValue) setSelectedEpLength(newValue.value);
-    actionMeta
-  };
   
 
   return (
@@ -80,22 +86,40 @@ const SearchPage = () => {
               placeholder="Genre" 
               onChange={onHandleGenre} 
             />
-            <Select
-              options={epsLengths} 
-              placeholder="Episode Length" 
-              onChange={onHandleEps}
-            />
           </div>
         </div>
         <div>
-          podcast eps
+          <button onClick={() => {setIsShowEps(false); setIsShowPodcast(true)}}>podcast</button>
+           <button onClick={() => {setIsShowPodcast(false); setIsShowEps(true)}}>eps</button>
         </div>
         
       </div>
 
       <main>
         <div className="mt-2 -ml-1.5 px-1.5 py-2 flex justify-between overflow-x-auto xl:mt-4">
-          {result}
+          {
+            isShowPodcast ? 
+            <div>
+              <p>PODCAST</p>
+            {podcasts
+              .map((podcast: cardProps, idx: number) => (
+                <PodcastCard key={idx} {...podcast} />
+              ))}
+            </div>
+            : <></>
+          }
+          {
+            isShowEps ? 
+            <div>
+              <p>EPISODE</p>
+            {
+              episodes.map((eps: cardProps, idx: number) => (
+                <PodcastCard key={idx} {...eps} />
+              ))}
+
+            </div>
+            : <></>
+          }
         </div>
       </main>
     </section>
