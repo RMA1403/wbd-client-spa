@@ -38,10 +38,10 @@ export default function HomePage(): JSX.Element {
         },
       });
 
-      const res1 = await axios.get(
-        "http://127.0.0.1:8080/public/profile?user_id=1"
-      );
-      console.log(res1);
+      // const res1 = await axios.get(
+      //   "http://127.0.0.1:8080/public/profile?user_id=1"
+      // );
+      // console.log(res1);
 
       const [resTech, resComedy, resHorror] = await Promise.all([
         axiosInstance.get(
@@ -55,9 +55,18 @@ export default function HomePage(): JSX.Element {
         ),
       ]);
 
-      setTechPodcasts(resTech.data.podcasts);
-      setComedyPodcasts(resComedy.data.podcasts);
-      setHorrorPodcasts(resHorror.data.podcasts);
+      setTechPodcasts([
+        ...resTech.data.premiumPodcasts,
+        ...resTech.data.regularPodcasts,
+      ]);
+      setComedyPodcasts([
+        ...resComedy.data.premiumPodcasts,
+        ...resComedy.data.regularPodcasts,
+      ]);
+      setHorrorPodcasts([
+        ...resHorror.data.premiumPodcasts,
+        ...resHorror.data.regularPodcasts,
+      ]);
     })();
   }, []);
 
