@@ -3,6 +3,8 @@ import Placeholder from "../assets/placeholder_image.jpg";
 import PlayIcon from "../assets/play-icon.svg";
 import PlusIcon from "../assets/plus-icon.svg";
 import { Queue, useQueue, useQueueDispatch } from "../contexts/QueueContext";
+// import { useState, useEffect } from "react";
+// import { cardProps } from "./LibraryCard";
 
 export type headerProps = {
   category: string;
@@ -29,6 +31,35 @@ export default function PodcastHeader({
 
   const queue = useQueue();
   const dispatchQueue = useQueueDispatch();
+  // const [libraryData, setLibraryData] = useState<cardProps[]>([]);
+  
+  // useEffect(() => {
+  //   (async () => {
+  //     const resLibaryData = await axios.get(
+  //       `${import.meta.env.VITE_REST_URL}/library/${userId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     setLibraryData(resLibaryData.data.playlists);
+  //   })();
+  // }, [userId]);
+
+  // const handleAddPodcastToLibrary = async () => {
+  //   const axiosInstance = axios.create({
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     },
+  //   });
+
+  //   await axiosInstance.post(`${import.meta.env.VITE_REST_URL}/playlist/podcast/${id_podcast}`, {
+  //     idPlaylist: ,
+  //     idPodcast: ,
+  //   })
+
+  // }
 
   const handleAddToQueue = async (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();

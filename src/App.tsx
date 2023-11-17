@@ -11,6 +11,7 @@ import QueuePage from "./pages/queue";
 import NotFoundPage from "./pages/not-found";
 import axios from "axios";
 import LibraryPage from "./pages/library";
+import PlaylistPage from "./pages/playlist"
 
 export default function App(): JSX.Element {
   const userQueueLoader = async () => {
@@ -62,6 +63,10 @@ export default function App(): JSX.Element {
               element: <QueuePage />,
               loader: userQueueLoader,
             },
+            {
+              path: "/playlist/:idPlaylist",
+              element: <PlaylistPage/>,
+            }
           ],
         },
       ],

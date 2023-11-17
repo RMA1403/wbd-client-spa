@@ -4,18 +4,38 @@ import Placeholder from "../assets/placeholder_image.jpg";
 import SampleImage1 from "../assets/escape.jpg";
 import SampleImage2 from "../assets/hello.jpg";
 import SampleImage3 from "../assets/play.jpg";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios"
 
 export type cardProps = {
   title: string;
-  imageurl: string;
+  id_playlist: number;
 };
 
 export default function LibraryCard({
-  title,
-//   imageurl
+  title, 
+  id_playlist
 }: cardProps): JSX.Element {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(`/playlist/${id_playlist}`);
+  };
+
+  // const handleDeleteLibrary = async () => {
+  //   const axiosInstance = axios.create({
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     },
+  //   });
+
+  //   await axiosInstance.delete(`${import.meta.env.VITE_REST_URL}/library/${id_playlist}`, {
+  //     idPlaylist: id_playlist,
+  //   });
+  // };
+  
+
   return (
-    <div className="w-[160px] h-[210px] rounded-xl overflow-hidden border-NAVY-5 border-2 shadow-[-2px_2px_4px_0_#5C67DE,2px_-2px_4px_0_#5C67DE,-2px_-2px_4px_0_#5C67DE,2px_2px_4px_0_#5C67DE] hover:shadow-[-2px_2px_4px_0_#F5D049,2px_-2px_4px_0_#F5D049,-2px_-2px_4px_0_#F5D049,2px_2px_4px_0_#F5D049] hover:bg-YELLOW-5 hover:border-YELLOW-1 group shrink-0 xl:w-[200px] xl:h-[288px]">
+    <div onClick={handleNavigate} className="w-[160px] h-[210px] rounded-xl overflow-hidden border-NAVY-5 border-2 shadow-[-2px_2px_4px_0_#5C67DE,2px_-2px_4px_0_#5C67DE,-2px_-2px_4px_0_#5C67DE,2px_2px_4px_0_#5C67DE] hover:shadow-[-2px_2px_4px_0_#F5D049,2px_-2px_4px_0_#F5D049,-2px_-2px_4px_0_#F5D049,2px_2px_4px_0_#F5D049] hover:bg-YELLOW-5 hover:border-YELLOW-1 group shrink-0 xl:w-[200px] xl:h-[288px]">
                 
         <div className="shrink-0 w-[160px] h-[160px] overflow-hidden grid grid-cols-2 grid-rows-2 xl:w-[200px] xl:h-[200px]">
         <img

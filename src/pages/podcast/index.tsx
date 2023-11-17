@@ -30,7 +30,9 @@ export default function PodcastPage(): JSX.Element {
           import.meta.env.VITE_REST_URL
         }/podcast/${podcastId}?premium=${searchParams.get("premium")}`
       );
-
+      if(!resPodcast.data.podcast) {
+        navigate(`/`);
+      }
       setPodcastHeader(resPodcast.data.podcast);
       setEpisodes(resPodcast.data.podcast.PremiumEpisodes);
     })();
