@@ -3,8 +3,9 @@ import Placeholder from "../assets/placeholder_image.jpg";
 import PlayIcon from "../assets/play-icon.svg";
 import PlusIcon from "../assets/plus-icon.svg";
 import { Queue, useQueue, useQueueDispatch } from "../contexts/QueueContext";
-// import { useState, useEffect } from "react";
-// import { cardProps } from "./LibraryCard";
+import { useState, useEffect } from "react";
+import { cardProps } from "./LibraryCard";
+import { useNavigate } from "react-router-dom"
 
 export type headerProps = {
   category: string;
@@ -31,35 +32,46 @@ export default function PodcastHeader({
 
   const queue = useQueue();
   const dispatchQueue = useQueueDispatch();
-  // const [libraryData, setLibraryData] = useState<cardProps[]>([]);
+  const [libraryData, setLibraryData] = useState<cardProps[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    (async () => {
+      const resLibaryData = await axios.get(
+        `${import.meta.env.VITE_REST_URL}/library`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setLibraryData(resLibaryData.data.playlists);
+    })();
+  }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const resLibaryData = await axios.get(
-  //       `${import.meta.env.VITE_REST_URL}/library/${userId}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     setLibraryData(resLibaryData.data.playlists);
-  //   })();
-  // }, [userId]);
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  }
 
-  // const handleAddPodcastToLibrary = async () => {
-  //   const axiosInstance = axios.create({
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   });
+  const handleNavigateLib = () => {
+    navigate(`/library`);
+  }
 
-  //   await axiosInstance.post(`${import.meta.env.VITE_REST_URL}/playlist/podcast/${id_podcast}`, {
-  //     idPlaylist: ,
-  //     idPodcast: ,
-  //   })
+  const handleAddPodcastToLibrary = async (idPlaylist:number) => {
+ 
+    const axiosInstance = axios.create({
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
-  // }
+    await axiosInstance.post(`${import.meta.env.VITE_REST_URL}/playlist/podcast/${id_podcast}`, {
+      idPlaylist: idPlaylist,
+      idPodcast: id_podcast,
+    })
+
+  }
 
   const handleAddToQueue = async (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -144,6 +156,7 @@ export default function PodcastHeader({
           >
             Add To Library
             <img
+              onClick={toggleVisibility}
               className="inline ml-[45px]"
               width={16}
               height={16}
@@ -151,6 +164,29 @@ export default function PodcastHeader({
               alt="plus icon"
             />
           </button>
+
+          {isVisible? (
+            <div className="w-[100px] h-[100px] overflow-y-scroll rounded-xl shadow-lg bg-WHITE text-black">
+              {libraryData?.map((data:cardProps) => (
+                <button onClick={()=>handleAddPodcastToLibrary(data.id_playlist)}>{data.title}</button>
+              ))}
+            </div>
+          ) :
+          <button
+          data-te-toggle="tooltip"
+          title="create new library"
+          className=" w-[225px] h-[50px] text-NAVY-5 bg-white rounded-[16px] h4 leading-4 shadow-lg"
+        >
+          New Library
+          <img
+            onClick={handleNavigateLib}
+            className="inline ml-[45px]"
+            width={16}
+            height={16}
+            src={PlusIcon}
+            alt="plus icon"
+          />
+        </button>}
 
           <button
             onClick={handleAddToQueue}
