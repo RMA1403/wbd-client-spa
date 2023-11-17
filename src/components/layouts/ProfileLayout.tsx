@@ -1,22 +1,37 @@
 import { Outlet } from "react-router-dom";
 
 // Asset imports
-import SampleImage1 from "../../assets/escape.jpg";
 import ProfilePage from "../../pages/profile";
 import SubscriptionPage from "../../pages/subscription";
-import { useState} from "react";
+import { useState, useEffect} from "react";
+import axios from "axios";
 
 export default function ProfileLayout(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubsOpen, setIsSubsOpen] = useState(false);
+  const [urlProfpic, setUrlProfpic] = useState<string>("");
+  useEffect (() => {
+    (async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_REST_URL}/profile`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
+      const res2 = res.data;
+      setUrlProfpic(res2.url_profpic);
+    })();
+  }, []);
   return (
     <>
       <aside className="w-full mt-4 px-6 flex flex-row-reverse items-center gap-8 xl:gap-12 xl:mt-6 xl:px-8">
         <button className="rounded-full border-BLACK border" onClick={() => setIsOpen(!isOpen)}>
           <img
             className="rounded-full w-[50px] h-[50px] object-cover object-center xl:w-[75px] xl:h-[75px]"
-            src={SampleImage1}
+            src={`http://localhost:8080/app/storage${urlProfpic}`}
             width={75}
             height={75}
             alt=""

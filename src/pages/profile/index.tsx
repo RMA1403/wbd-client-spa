@@ -8,6 +8,7 @@ const ProfilePage = ({setIsOpen}:{setIsOpen: (bool: boolean)=>void}) => {
 // const ProfilePage = () => {
     const [name, setName] = useState<string>("");
     const [username, setUsername] = useState<string>("");
+    const [urlProfpic, setUrlProfpic] = useState<string>("");
     //useref
     const profileBox = useRef<HTMLDivElement>(null); 
     const background = useRef<HTMLDivElement>(null);
@@ -25,6 +26,7 @@ const ProfilePage = ({setIsOpen}:{setIsOpen: (bool: boolean)=>void}) => {
         const res2 = res.data;
         setName(res2.name);
         setUsername(res2.username);
+        setUrlProfpic(res2.url_profpic);
       })();
     }, []);
 
@@ -60,7 +62,7 @@ const ProfilePage = ({setIsOpen}:{setIsOpen: (bool: boolean)=>void}) => {
           <div className="flex flex-row p-12 items-center gap-14">
               <img 
                 className="w-[200px] h-[200px] object-cover object-center rounded-full outline outline-white"
-                src={import.meta.env.VITE_PHP_STORAGE_URL}
+                src={`http://localhost:8080/app/storage${urlProfpic}`}
                 alt="image"
               />
               <ul className="flex flex-col text-black font-semibold gap-5">

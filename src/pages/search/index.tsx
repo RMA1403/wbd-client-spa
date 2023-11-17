@@ -31,25 +31,35 @@ const SearchPage = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:3000/search/podcast?keyword=${keyword}&genre=${selectedGenre}`
+        `http://localhost:3000/search/podcast?keyword=${keyword}&genre=${selectedGenre}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setPodcasts([
         res.data.premiumPodcasts,
         res.data.regularPodcasts,
       ]);
-    })
+    })()
   }, [keyword, selectedGenre])
 
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:3000/search/episode?keyword=${keyword}&genre=${selectedGenre}`
+        `http://localhost:3000/search/episode?keyword=${keyword}&genre=${selectedGenre}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setEpisodes([
         res.data.premiumEpisodes,
         res.data.regularEpisodes,
       ]);
-    })
+    })()
   }, [keyword, selectedGenre])
 
   const handleSearch = (e:ChangeEvent<HTMLInputElement>) => {
@@ -89,20 +99,20 @@ const SearchPage = () => {
             />
           </div>
         </div>
-        <div className="flex flex-row gap-2">
-          <button className="flex bg-yellow text-black" onClick={() => {setIsShowEps(true); setIsShowPodcast(true)}}>all</button>
-          <button className="flex bg-yellow text-black" onClick={() => {setIsShowEps(false); setIsShowPodcast(true)}}>podcast</button>
-           <button className="flex bg-yellow text-black" onClick={() => {setIsShowPodcast(false); setIsShowEps(true)}}>eps</button>
+        <div className="flex flex-row gap-2 ml-8 mt-2">
+          <button className="flex bg-YELLOW-5 text-black rounded-full px-4 py-2 hover:scale-110" onClick={() => {setIsShowEps(true); setIsShowPodcast(true)}}>all</button>
+          <button className="flex bg-YELLOW-5 text-black rounded-full px-4 py-2 hover:scale-110" onClick={() => {setIsShowEps(false); setIsShowPodcast(true)}}>podcast</button>
+           <button className="flex bg-YELLOW-5 text-black rounded-full px-4 py-2 hover:scale-110" onClick={() => {setIsShowPodcast(false); setIsShowEps(true)}}>eps</button>
         </div>
         
       </div>
 
-      <main>
-        <div className="mt-2 -ml-1.5 px-1.5 py-2 flex justify-between overflow-x-auto xl:mt-4">
+      <main className="px-8">
+        <div className="flex flex-col mt-2 -ml-1.5 px-1.5 py-2 gap-y-3 justify-between overflow-x-auto xl:mt-4">
           {
             isShowPodcast ? 
             <div>
-              <p className="text-black text-3xl">PODCAST</p>
+              <p className="text-black text-3xl font-bold">PODCAST</p>
               <div className="grid grid-cols-5 content-start gap-4">
                 {podcasts
                   .map((podcast: cardProps, idx: number) => (
@@ -116,7 +126,7 @@ const SearchPage = () => {
           {
             isShowEps ? 
             <div>
-              <p className="text-black text-3xl">EPISODE</p>
+              <p className="text-black text-3xl font-bold">EPISODE</p>
               <div className="grid grid-cols-5 content-start gap-4">
                 { episodes.map((eps: cardEpsProps, idx: number) => (
                   <EpisodeCard key={idx} {...eps} />
