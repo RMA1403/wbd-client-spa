@@ -32,7 +32,7 @@ export default function PodcastHeader({
   const queue = useQueue();
   const dispatchQueue = useQueueDispatch();
   // const [libraryData, setLibraryData] = useState<cardProps[]>([]);
-  
+
   // useEffect(() => {
   //   (async () => {
   //     const resLibaryData = await axios.get(
@@ -99,7 +99,7 @@ export default function PodcastHeader({
 
   return (
     <div className="block">
-      <div className="w-[950px] inline-flex mt-[20px]">
+      <div className="w-full inline-flex mt-[20px]">
         <div className="">
           <div className="w-[225px] h-[225px]">
             <img
@@ -128,7 +128,9 @@ export default function PodcastHeader({
           </div>
 
           <div className="block">
-            <p className="b3 text-gray-600 ">{description}</p>
+            <p className="b3 text-gray-600 md:max-xl:text-[12px]">
+              {description}
+            </p>
           </div>
         </div>
       </div>

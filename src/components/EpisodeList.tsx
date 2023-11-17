@@ -100,7 +100,7 @@ export default function EpisodeList({
   return (
     <div
       onClick={handleNavigate}
-      className="cursor-pointer group/item flex items-center w-[1100px] h-[110px] rounded-xl bg-white hover:bg-NAVY-5 text-black hover:text-white"
+      className="cursor-pointer group/item flex items-center w-full h-[110px] rounded-xl bg-white hover:bg-NAVY-5 text-black hover:text-white"
     >
       <h1 className="h2 ml-[30px] mr-[20px]">{order}</h1>
       <img
